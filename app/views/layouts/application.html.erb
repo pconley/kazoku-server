@@ -12,11 +12,11 @@
 	  
   	<% if current_user %>
   		<strong><%= current_user.email %></strong> |
-  		<%= link_to 'Home', root_path %> |
+  		<%= link_to_unless_current 'Home', user_root_path %> |
   		<%= link_to 'Logout', logout_path %>
   	<% else %>
-  		<%= link_to 'Home', root_path %> |
-  		<%= link_to 'Login', new_user_session_path %>
+  		<%= link_to_unless_current 'Home', root_path %> |
+  		<%= link_to_unless_current 'Login', new_user_session_path %>
   	<% end %>
   	<br/><br/>	
 	  
