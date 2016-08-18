@@ -9,6 +9,26 @@
   </head>
 
   <body>
+	  
+  	<% if current_user %>
+  		<strong><%= current_user.email %></strong> |
+  		<%= link_to 'Home', root_path %> |
+  		<%= link_to 'Logout', logout_path %>
+  	<% else %>
+  		<%= link_to 'Home', root_path %> |
+  		<%= link_to 'Login', new_user_session_path %>
+  	<% end %>
+  	<br/><br/>	
+	  
+  	<% flash.each do |name, msg| %>
+  		<div class="alert alert-<%= name %>">
+  			<button type="button" class="close" data-dismiss="alert">&times;</button>
+  			<%= msg %>
+  		</div>
+  	<% end %>
+  	<br/><br/>	
+	   
     <%= yield %>
   </body>
+  
 </html>
