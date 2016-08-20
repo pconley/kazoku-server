@@ -1,6 +1,6 @@
 <h1>People</h1>
 
-<table>
+<table class="table table-striped" >
   <thead>
     <tr>
       <th>Key</th>
@@ -34,9 +34,9 @@
         <td><%= person.death_place %></td>
         <td><%= person.buried_place %></td>
         <td><%= person.gender %></td>
-        <td><%= link_to 'Show', person %></td>
-        <td><%= link_to 'Edit', edit_person_path(person) %></td>
-        <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', person, class: 'btn btn-xs btn-primary' %></td>
+        <td><%= link_to 'Edit', edit_person_path(person), class: 'btn btn-xs btn-default' %></td>
+        <!-- <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger' %></td> -->
       </tr>
     <% end %>
   </tbody>
