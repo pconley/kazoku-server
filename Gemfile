@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.2.4' # heroku
+
 gem 'devise'
 
 gem 'therubyracer'  # If using Ruby

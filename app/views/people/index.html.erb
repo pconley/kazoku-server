@@ -3,6 +3,7 @@
 <table class="table table-striped" >
   <thead>
     <tr>
+      <th>ID</th>
       <th>Key</th>
       <th>First name</th>
       <th>Last name</th>
@@ -22,6 +23,7 @@
   <tbody>
     <% @people.each do |person| %>
       <tr>
+        <td><%= person.id %></td>
         <td><%= person.key %></td>
         <td><%= person.first_name %></td>
         <td><%= person.last_name %></td>
