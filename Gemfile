@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 gem 'devise'
 
 gem 'therubyracer'  # If using Ruby
-gem 'jquery-rails'  # If using Bootstrap's JS plugins.
 gem 'less-rails-bootstrap'
 
 group :development, :test do
