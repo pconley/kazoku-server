@@ -10,18 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160818011101) do
+ActiveRecord::Schema.define(version: 20160823132722) do
 
   create_table "people", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
     t.string   "gender"
-    t.date     "birth_date"
-    t.string   "birth_date_string"
     t.string   "birth_place"
-    t.date     "death_date"
-    t.string   "death_date_string"
     t.string   "death_place"
     t.date     "buried_date"
     t.string   "buried_date_string"
@@ -31,6 +27,12 @@ ActiveRecord::Schema.define(version: 20160818011101) do
     t.string   "fams_key"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.integer  "birth_year"
+    t.integer  "birth_month"
+    t.integer  "birth_day"
+    t.integer  "death_year"
+    t.integer  "death_month"
+    t.integer  "death_day"
   end
 
   create_table "users", force: :cascade do |t|

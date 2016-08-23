@@ -2,48 +2,24 @@
 
 <p>
   <strong>First name:</strong>
-  <%= @person.first_name %>
-</p>
-
-<p>
+  <%= @person.first_name %><br>
   <strong>Last name:</strong>
-  <%= @person.last_name %>
-</p>
-
-<p>
+  <%= @person.last_name %><br>
   <strong>Birth date:</strong>
-  <%= @person.birth_date %>
-</p>
-
-<p>
+  <%= @person.birth_date_string %><br>
   <strong>Birth place:</strong>
-  <%= @person.birth_place %>
-</p>
-
-<p>
+  <%= @person.birth_place %><br>
   <strong>Email:</strong>
-  <%= @person.email %>
-</p>
-
-<p>
+  <%= @person.email %><br>
   <strong>Death date:</strong>
-  <%= @person.death_date %>
-</p>
-
-<p>
+  <%= @person.death_date_string %><br>
   <strong>Death place:</strong>
-  <%= @person.death_place %>
-</p>
-
-<p>
+  <%= @person.death_place %><br>
   <strong>Buried place:</strong>
-  <%= @person.buried_place %>
-</p>
-
-<p>
+  <%= @person.buried_place %><br>
   <strong>Gender:</strong>
-  <%= @person.gender %>
+  <%= @person.gender %><br>
 </p>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %>
+<%= link_to 'List', people_path %>

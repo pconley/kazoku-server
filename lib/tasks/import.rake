@@ -17,8 +17,8 @@ namespace :db do
         sy_hash = Hash[my_hash.map{ |k, v| [k.to_sym, v] }]
         xx_hash = sy_hash.slice(:key, 
           :last_name, :first_name,:email,:gender,
-          :birth_date,:birth_date_string,:birth_place,
-          :death_date,:death_date_string,:death_place,
+          :birth_day,:birth_month,:birth_year,:birth_place,
+          :death_day,:death_month,:death_year,:death_place,
           :buried_date,:buried_date_string,:buried_place,
           :famc_key,:fams_key
         )
@@ -27,7 +27,7 @@ namespace :db do
         p = Person.create(xx_hash)
         puts "#{count}: #{p}"
         
-        break if count > 10
+        break if count > 20
       end
       
     end

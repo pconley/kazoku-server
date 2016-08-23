@@ -97,17 +97,28 @@ namespace :db do
       names = name.split('/')
       fname = names[0]
       lname = names[1]
+      bd,bm,by = split_date(bdate)
+      dd,dm,dy = split_date(ddate)
     	$inds[key] = { 
         key: key, first_name: fname.strip, 
         last_name: lname, gender: gender,
         chris_place: cplace, chris_date_string: cdate, 
-        birth_place: bplace, birth_date_string: bdate, 
-        death_place: dplace, death_date_string: ddate, 
+        birth_place: bplace, birth_day: bd, birth_month: bm, birth_year: by, 
+        death_place: dplace, death_day: dd, death_month: dm, death_year: dy, 
         buried_place: xplace, buried_date_string: xdate, 
         email: mail, occupaton: occu, note: note,
         famc_key: famc, fams_key: fams 
       }
     	# trace ">>>> #{$inds[key]}"
+    end
+    
+    def split_date(text)
+      if text
+        d,m,y = text.split(':')
+        return d.to_i, m.to_i, y.to_i
+      else
+        return 0,0,0
+      end
     end
     
     def process_note(f)
@@ -269,7 +280,7 @@ namespace :db do
     			process_other(f)
     		end
     		d,t,k = parse($nextline)
-        # break if count > 10
+        # break if count > 20
     	end
     end
 

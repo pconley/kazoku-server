@@ -22,8 +22,10 @@
   </div>
 
   <div class="field">
-    <%= f.label :birth_date %>
-    <%= f.date_select :birth_date %>
+    <%= f.label 'Birth M - D - Y' %>
+    <%= f.number_field :birth_month %>
+    <%= f.number_field :birth_day %>
+    <%= f.number_field :birth_year %>
   </div>
 
   <div class="field">
@@ -37,8 +39,10 @@
   </div>
 
   <div class="field">
-    <%= f.label :death_date %>
-    <%= f.date_select :death_date %>
+    <%= f.label 'Death M - D - Y' %>
+    <%= f.number_field :death_month %>
+    <%= f.number_field :death_day %>
+    <%= f.number_field :death_year %>
   </div>
 
   <div class="field">
