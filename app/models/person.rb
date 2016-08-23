@@ -4,6 +4,10 @@ class Person < ApplicationRecord
     "<Person #{key} #{last_name}, #{first_name}>"
   end
   
+  def rawtexts
+    rawtext.split("\r\n")
+  end
+  
   def birth_date_string
     date_as_string(birth_day,birth_month,birth_year)
   end
@@ -20,7 +24,6 @@ class Person < ApplicationRecord
   end
   
   def month_string(m)
-    puts "month = #{m.to_i}"
     case m.to_i
     when 0
       ""

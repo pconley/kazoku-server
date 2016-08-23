@@ -13,5 +13,7 @@ class AddDateFieldsToPeople < ActiveRecord::Migration[5.0]
     remove_column :people, :death_date, :date
     remove_column :people, :death_date_string, :string
     
+    add_column    :people, :rawtext, :text
+    
   end
 end

@@ -20,7 +20,7 @@ namespace :db do
           :birth_day,:birth_month,:birth_year,:birth_place,
           :death_day,:death_month,:death_year,:death_place,
           :buried_date,:buried_date_string,:buried_place,
-          :famc_key,:fams_key
+          :famc_key,:fams_key,:rawtext
         )
         
         count += 1

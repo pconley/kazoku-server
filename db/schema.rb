@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160823132722) do
     t.integer  "death_year"
     t.integer  "death_month"
     t.integer  "death_day"
+    t.text     "rawtext"
   end
 
   create_table "users", force: :cascade do |t|

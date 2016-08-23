@@ -19,6 +19,12 @@
   <%= @person.buried_place %><br>
   <strong>Gender:</strong>
   <%= @person.gender %><br>
+  <br><br><strong>Raw Text:</strong>
+  <ul>
+    <% @person.rawtexts.each do |line| %>
+      <li><%= line %></li>
+    <% end %>
+  </ul>
 </p>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |

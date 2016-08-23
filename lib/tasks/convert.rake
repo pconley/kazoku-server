@@ -7,13 +7,15 @@ namespace :db do
     $inds = {}
     $fams = {}
 
-    $nextline = ""
+    $rawtext = ''
+    $nextline = ''
     
     def trace(s)
       # puts s
     end
 
     def read(f)
+      $rawtext += $nextline
     	$nextline = f.readline
     	#trace "READ: #{$nextline}"
     	d, t, k = parse($nextline)
@@ -31,6 +33,7 @@ namespace :db do
 
     def process_individual(f)
       note = '';
+      $rawtext = ''
       trace "=indi: #{$nextline}"
       
     	d, t, key = parse($nextline)
@@ -92,6 +95,9 @@ namespace :db do
         d, t, rest = parse($nextline)
         
     	end
+      
+      puts "rawtext...\n#{$rawtext}\n"
+      
       trace "-indi:"
       
       names = name.split('/')
@@ -107,7 +113,7 @@ namespace :db do
         death_place: dplace, death_day: dd, death_month: dm, death_year: dy, 
         buried_place: xplace, buried_date_string: xdate, 
         email: mail, occupaton: occu, note: note,
-        famc_key: famc, fams_key: fams 
+        famc_key: famc, fams_key: fams, rawtext: $rawtext
       }
     	# trace ">>>> #{$inds[key]}"
     end
