@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823132722) do
+ActiveRecord::Schema.define(version: 20160825135319) do
+
+  create_table "families", force: :cascade do |t|
+    t.string   "name"
+    t.string   "key"
+    t.string   "husb_key"
+    t.string   "wife_key"
+    t.integer  "wife_id"
+    t.integer  "husband_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.string  "role"
+    t.integer "person_id"
+    t.integer "family_id"
+    t.index ["family_id"], name: "index_memberships_on_family_id"
+    t.index ["person_id"], name: "index_memberships_on_person_id"
+  end
 
   create_table "people", force: :cascade do |t|
     t.string   "first_name"
@@ -24,7 +43,6 @@ ActiveRecord::Schema.define(version: 20160823132722) do
     t.string   "buried_place"
     t.string   "key"
     t.string   "famc_key"
-    t.string   "fams_key"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "birth_year"
@@ -34,6 +52,9 @@ ActiveRecord::Schema.define(version: 20160823132722) do
     t.integer  "death_month"
     t.integer  "death_day"
     t.text     "rawtext"
+    t.integer  "family_id"
+    t.string   "fams_keys"
+    t.index ["family_id"], name: "index_people_on_family_id"
   end
 
   create_table "users", force: :cascade do |t|

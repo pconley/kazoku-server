@@ -33,6 +33,7 @@ namespace :db do
 
     def process_individual(f)
       note = '';
+      fams = ''
       $rawtext = ''
       trace "=indi: #{$nextline}"
       
@@ -49,7 +50,8 @@ namespace :db do
           gender = rest
     		  read(f)     
         when 'FAMS'
-          fams = rest
+          sep = fams.length>0 ? ';' : ''
+          fams += sep+rest
     		  read(f)      
         when 'FAMC'
           famc = rest
@@ -113,7 +115,7 @@ namespace :db do
         death_place: dplace, death_day: dd, death_month: dm, death_year: dy, 
         buried_place: xplace, buried_date_string: xdate, 
         email: mail, occupaton: occu, note: note,
-        famc_key: famc, fams_key: fams, rawtext: $rawtext
+        famc_key: famc, fams_keys: fams, rawtext: $rawtext
       }
     	# trace ">>>> #{$inds[key]}"
     end
@@ -230,7 +232,7 @@ namespace :db do
     		wife = rest if t=='WIFE'
     		d, t, rest = read(f)
     	end
-    	$fams[key] = {key: key, husb: husb, wife: wife }
+    	$fams[key] = {key: key, husb_key: husb, wife_key: wife }
       # trace $fams[key]
     end
 

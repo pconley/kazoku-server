@@ -1,9 +1,34 @@
 class Person < ApplicationRecord
   
+  #belongs_to :clan, class_name: 'Family', optional: true
+  belongs_to :family, optional: true
+  
+  has_many :memberships
+  has_many :families, through: :memberships
+  
+  # has_many   :own_family, class_name: 'Family'
+  
   def to_s
-    "<Person #{key} #{last_name}, #{first_name}>"
+    "<Person##{id} #{key} #{last_name}, #{first_name}>"
   end
   
+  def description
+    "#{full_name} #{display_dates} [#{key}]"
+  end
+  
+  def display_name
+    "#{last_name}, #{first_name}"
+  end
+  
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+  
+  def display_dates
+    birth_string = birth_year == 0 ? '?' : birth_year.to_s
+    death_year==0 ? "(#{birth_string})" : "(#{birth_string} - #{death_year})"
+  end
+   
   def rawtexts
     rawtext.split("\r\n")
   end

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Families</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Link...</th>
+      <th>Link...</th>
+      <th>Children</th>	  
+	  
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @families.each do |family| %>
+      <tr>
+        <td><%= link_to family.display_name, family %></td>
+        <td><%= family.people[0].try(:full_name) %></td>
+        <td><%= family.people[1].try(:full_name) %></td>
+        <td><%= family.children.count > 0 ? family.children.count : '' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Family', new_family_path %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  key: MyString
+  husb_key: MyString
+  wife_key: MyString
+
+two:
+  name: MyString
+  key: MyString
+  husb_key: MyString
+  wife_key: MyString

@@ -1,6 +1,10 @@
 <p id="notice"><%= notice %></p>
 
+<h1><%= @person.description %></h1>
+
 <p>
+  <strong>ID:</strong>
+  <%= @person.id %><br>
   <strong>First name:</strong>
   <%= @person.first_name %><br>
   <strong>Last name:</strong>
@@ -19,6 +23,13 @@
   <%= @person.buried_place %><br>
   <strong>Gender:</strong>
   <%= @person.gender %><br>
+  <strong>Up Link:</strong>
+  <%= link_to @person.famc_key, @person.family %><br>
+  <strong>Down Link(s):</strong>  
+  <% @person.families.each do |f| %>
+  	<br><%= link_to f.display_name, f %>
+  <% end %>
+  
   <br><br><strong>Raw Text:</strong>
   <ul>
     <% @person.rawtexts.each do |line| %>

@@ -4,28 +4,21 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Key</th>
-      <th>Name</th>
-	  
+      <th>Name</th> 
       <th colspan="2">Born</th>
-	  
       <th>Email</th>
       <th>Died</th>
       <th>Died at</th>
       <th>Buried</th>
       <th>Gender</th>
-      <th>MF Key</th>
-      <th>PF Key</th>
-	  
     </tr>
   </thead>
 
   <tbody>
     <% @people.each do |person| %>
       <tr>
-        <td><%= person.id %></td>
-        <td><%= person.key %></td>
-        <td><%= link_to person.first_name+' '+person.last_name, person %></td>
+        <td><%= link_to person.id, person %></td>
+        <td><%= link_to person.try(:display_name), person %></td>
         <td><%= person.birth_date_string %></td>
         <td><%= person.birth_place %></td>
         <td><%= person.email %></td>
@@ -33,9 +26,6 @@
         <td><%= person.death_place %></td>
         <td><%= person.buried_place %></td>
         <td><%= person.gender %></td>
-        <td><%= person.famc_key %></td>
-        <td><%= person.fams_key %></td>
-		
       </tr>
     <% end %>
   </tbody>

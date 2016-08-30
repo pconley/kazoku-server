@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @family.display_name %></h1>
+
+  <% @family.people.all.each do |member| %>
+  	<br><%= link_to member.description, member %>
+  <% end %>
+
+  <br>
+  <br><strong>Up Link(s)</strong>
+  <% @family.people.all.each do |spouse| %>
+	<% if spouse.family %>
+    	<br><%= link_to spouse.family.display_name, spouse.family %> << <%= spouse.first_name %>
+	<% end %>
+  <% end %>
+  
+  
+  <% if @family.children %>
+  <br>
+  <br><strong>Down Link(s)</strong>
+  <% @family.children.all.each do |child| %>
+    <br>>> <%= link_to child.display_name, child %> <%= child.display_dates %>
+	<% if child.families %> 
+		<% child.families.each do |f| %>
+			<% text = "#{f.key} (#{f.children.count})"%>
+			&nbsp;&nbsp;&nbsp;<%= link_to text, f %>
+		<% end %>
+	<% end %>
+	
+  <% end %>
+  <% end %>
+  
+<br><br><br>
+<%= link_to 'Edit', edit_family_path(@family) %> |
+<%= link_to 'List', families_path %>

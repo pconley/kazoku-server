@@ -20,14 +20,14 @@ namespace :db do
           :birth_day,:birth_month,:birth_year,:birth_place,
           :death_day,:death_month,:death_year,:death_place,
           :buried_date,:buried_date_string,:buried_place,
-          :famc_key,:fams_key,:rawtext
+          :famc_key,:fams_keys,:rawtext
         )
         
         count += 1
-        p = Person.create(xx_hash)
+        p = Person.create!(xx_hash)
         puts "#{count}: #{p}"
         
-        break if count > 20
+        #break if count > 20
       end
       
     end
