@@ -8,7 +8,12 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
   def index
-    @people = Person.all
+    puts "*** PeopleController: index search=#{params[:search]}"
+    if params[:search] && params[:search].length > 0
+      @people = Person.search(params[:search])
+    else
+      @people = Person.all
+    end
   end
 
   # GET /people/1

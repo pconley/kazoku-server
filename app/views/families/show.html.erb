@@ -7,7 +7,7 @@
   <% end %>
 
   <br>
-  <br><strong>Up Link(s)</strong>
+  <br><strong>Parent(s)</strong>
   <% @family.people.all.each do |spouse| %>
 	<% if spouse.family %>
     	<br><%= link_to spouse.family.display_name, spouse.family %> << <%= spouse.first_name %>
@@ -17,12 +17,12 @@
   
   <% if @family.children %>
   <br>
-  <br><strong>Down Link(s)</strong>
+  <br><strong>Children</strong>
   <% @family.children.all.each do |child| %>
     <br>>> <%= link_to child.display_name, child %> <%= child.display_dates %>
 	<% if child.families %> 
 		<% child.families.each do |f| %>
-			<% text = "#{f.key} (#{f.children.count})"%>
+			<% text = "#{f.display_name} (#{f.children.count})"%>
 			&nbsp;&nbsp;&nbsp;<%= link_to text, f %>
 		<% end %>
 	<% end %>

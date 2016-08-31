@@ -12,8 +12,12 @@ class Person < ApplicationRecord
     "<Person##{id} #{key} #{last_name}, #{first_name}>"
   end
   
+  def self.search(search)
+    where("first_name LIKE ? OR last_name LIKE ? ", "%#{search}%", "%#{search}%" ) 
+  end
+  
   def description
-    "#{full_name} #{display_dates} [#{key}]"
+    "#{full_name} #{display_dates}"
   end
   
   def display_name

@@ -13,14 +13,15 @@ class Family < ApplicationRecord
   end
   
   def display_name
-    name ? name : built_name
+    x = name ? name : built_name
+    "[ #{x} ]"
   end
   
   def built_name
     name = people[0].first_name
     name += ' & ' if name.length > 0 && people[1]
     name += people[1].first_name if people[1]
-    "#{key} #{name}"
+    return name
   end
   
 end
