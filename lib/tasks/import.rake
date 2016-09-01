@@ -23,12 +23,7 @@ namespace :db do
           :famc_key,:fams_keys,:rawtext
         )
         
-        search_text = ''
-        search_text += params[:first_name] + ' ' if params[:first_name]
-        search_text += params[:last_name]  + ' ' if params[:last_name]
-        search_text += params[:birth_year].to_s + ' ' if params[:birth_year]
-        search_text += params[:death_year].to_s + ' ' if params[:death_year]
-        params[:search_text] = search_text
+        params[:search_text] = Person.build_search_text(params)
         
         count += 1
         p = Person.create!(params)

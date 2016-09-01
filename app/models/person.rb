@@ -16,6 +16,15 @@ class Person < ApplicationRecord
     where("search_text LIKE ?", "%#{search}%") 
   end
   
+  def self.build_search_text(params)
+    search_text = ''
+    search_text += params[:first_name].downcase + ' ' if params[:first_name]
+    search_text += params[:last_name].downcase  + ' ' if params[:last_name]
+    search_text += params[:birth_year].to_s + ' ' if params[:birth_year]
+    search_text += params[:death_year].to_s + ' ' if params[:death_year]
+    return search_text
+  end
+  
   def description
     "#{full_name} #{display_dates}"
   end

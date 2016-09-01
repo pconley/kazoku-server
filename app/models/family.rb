@@ -18,7 +18,7 @@ class Family < ApplicationRecord
   end
   
   def built_name
-    name = people[0].first_name
+    name = people[0] ? people[0].first_name : ''
     name += ' & ' if name.length > 0 && people[1]
     name += people[1].first_name if people[1]
     return name
