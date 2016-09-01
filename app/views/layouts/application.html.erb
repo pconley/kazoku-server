@@ -10,7 +10,7 @@
 
   <body>
 	  
-	  <nav class="navbar navbar-default">
+	  <nav class="navbar navbar-default lichen">
 	    <div class="container-fluid">
 	      <!-- Brand and toggle get grouped for better mobile display -->
 	      <div class="navbar-header">
@@ -21,9 +21,9 @@
 	          <span class="icon-bar"></span>
 	        </button>
 		  	  <% if current_user %>
-				<%= link_to 'Kazuko', families_path, class: "navbar-brand"  %>
+				<%= link_to 'Kazuko', families_path, class: "navbar-brand lichen-text"  %>
 			 <% else %>
-				<%= link_to 'Kazuko', root_path, class: "navbar-brand"  %>	
+				<%= link_to 'Kazuko', root_path, class: "navbar-brand lichen-text"  %>	
 			  <% end %>		
 	      </div>
 
@@ -31,18 +31,18 @@
 	      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			  
 	        <ul class="nav navbar-nav">
-				<% fam_class = '' %>
-				<% mem_class = '' %>
 				
 				<% if controller_name == 'families' %>
 					<% fam_class = 'active' %>
+					<% mem_class = 'lichen-text' %>
 				<% elsif controller_name == 'people' %>
 					<% mem_class = 'active' %>				
+					<% fam_class = 'lichen-text' %>				
 				<% end %>
 				
 		  	  <% if current_user %>
-	          	<li class="<%= fam_class %>"><%= link_to 'Families', families_path %></a></li>
-	            <li class="<%= mem_class %>"><%= link_to 'Members', people_path %></li>
+	          	<li class="<%= fam_class %>"><%= link_to 'Families', families_path, class: fam_class %></a></li>
+	            <li class="<%= mem_class %>"><%= link_to 'Members', people_path, class: mem_class %></li>
 			  <% end %>
 	        </ul>
 			
@@ -56,8 +56,8 @@
 			
 	        <ul class="nav navbar-nav navbar-right">		
 			  	<% if current_user %>
-			  		<li><%= link_to current_user.email, "#" %></li>
-			  		<li><%= link_to 'Logout', logout_path %></li>
+			  		<li><%= link_to current_user.email, "#", class: 'lichen-text' %></li>
+			  		<li><%= link_to 'Logout', logout_path, class: 'lichen-text' %></li>
 			  	<% else %>
 			  		<li><%= link_to 'Sign In', new_user_session_path %></li>
 			  	<% end %>				  
@@ -66,6 +66,8 @@
 	      </div><!-- /.navbar-collapse -->
 	    </div><!-- /.container-fluid -->
 	  </nav>
+	
+	<!-- <%= image_tag "lichen.jpg", height: 40, width: 1200, class: "lichen" %> -->
 	  
   	<% flash.each do |name, msg| %>
   		<div class="alert alert-warning">
