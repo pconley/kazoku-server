@@ -13,7 +13,7 @@ class Person < ApplicationRecord
   end
   
   def self.search(search)
-    where("first_name LIKE ? OR last_name LIKE ? ", "%#{search}%", "%#{search}%" ) 
+    where("search_text LIKE ?", "%#{search}%") 
   end
   
   def description

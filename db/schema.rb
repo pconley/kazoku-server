@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825135319) do
+ActiveRecord::Schema.define(version: 20160901013554) do
 
   create_table "families", force: :cascade do |t|
     t.string   "name"
@@ -19,8 +19,9 @@ ActiveRecord::Schema.define(version: 20160825135319) do
     t.string   "wife_key"
     t.integer  "wife_id"
     t.integer  "husband_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "search_text"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -54,6 +55,9 @@ ActiveRecord::Schema.define(version: 20160825135319) do
     t.text     "rawtext"
     t.integer  "family_id"
     t.string   "fams_keys"
+    t.text     "search_text"
+    t.string   "middle_name"
+    t.string   "common_name"
     t.index ["family_id"], name: "index_people_on_family_id"
   end
 
