@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'people/index', to: 'people#index', as: :user_root
 
-  devise_for :users
+  devise_for :users, :skip => [:registrations]
   
   resources :people
   # add the angular 2 default style of route

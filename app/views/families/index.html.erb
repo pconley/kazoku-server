@@ -17,8 +17,16 @@
     <% @families.each do |family| %>
       <tr>
         <td><%= link_to family.display_name, family %></td>
-        <td><%= family.people[0].try(:full_name) %></td>
-        <td><%= family.people[1].try(:full_name) %></td>
+        <td>
+			<% if family.people[0] %>
+			<%= link_to family.people[0].try(:full_name), family.people[0] %>
+			<% end %>
+		</td>
+        <td>
+			<% if family.people[1] %>
+			<%= link_to family.people[1].try(:full_name), family.people[1] %>
+			<% end %>
+		</td>
         <td><%= family.children.count > 0 ? family.children.count : '' %></td>
       </tr>
     <% end %>
@@ -27,4 +35,4 @@
 
 <br>
 
-<%= link_to 'New Family', new_family_path %>
+<!--<%= link_to 'New Family', new_family_path %> -->

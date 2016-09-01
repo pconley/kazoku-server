@@ -2,8 +2,13 @@ namespace :db do
   
   desc "add users to system"
   
-  task add_users: :environment do
-    u1 = User.create!({email: 'p@p.p', password: 'password'})
+  task users: :environment do
+    
+    User.delete_all
+    
+    User.create!({email: 'pat@conley.com', password: 'Altoona2016'})
+    User.create!({email: 'mike@conley.com', password: 'Altoona2016'})
+    User.create!({email: 'donna@conley.com', password: 'Altoona2016'})
   end
 
 end
