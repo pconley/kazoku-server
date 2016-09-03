@@ -13,8 +13,7 @@ class Family < ApplicationRecord
   end
   
   def display_name
-    x = name ? name : built_name
-    "[ #{x} ]"
+    name ? name : built_name
   end
   
   def built_name

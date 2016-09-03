@@ -2,28 +2,36 @@
 
 <h1>Families</h1>
 
-<table>
+<table class="table table-striped" >
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Link...</th>
-      <th>Link...</th>
-      <th>Children</th>	  
+		<th>ID</th>
+      	<th>Name</th>
+      	<th>Spouse 1</th>
+      	<th>Spouse 2</th>
+      	<th>Children</th>	  
 	  
     </tr>
   </thead>
 
   <tbody>
     <% @families.each do |family| %>
+		
       <tr>
-        <td><%= link_to family.display_name, family %></td>
+		<td><%= family.id %></td>
+		<td>
+			<%= image_tag("family.png", size: "20x20") %>
+			<%= link_to family.display_name, family %>
+		</td>
         <td>
 			<% if family.people[0] %>
+			<%= image_tag("member.png", size: "20x20") %>
 			<%= link_to family.people[0].try(:full_name), family.people[0] %>
 			<% end %>
 		</td>
         <td>
 			<% if family.people[1] %>
+			<%= image_tag("member.png", size: "20x20") %>
 			<%= link_to family.people[1].try(:full_name), family.people[1] %>
 			<% end %>
 		</td>

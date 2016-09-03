@@ -41,7 +41,9 @@
 				<% end %>
 				
 		  	  <% if current_user %>
-	          	<li class="<%= fam_class %>"><%= link_to 'Families', families_path, class: fam_class %></a></li>
+	          	<li class="<%= fam_class %>">
+					<%= link_to image_tag("family.png", size: "30x30") + "Families", families_path, class: fam_class %></a>
+				</li>
 	            <li class="<%= mem_class %>"><%= link_to 'Members', people_path, class: mem_class %></li>
 			  <% end %>
 	        </ul>
