@@ -1,0 +1,1 @@
+json.extract! person, :id, :first_name, :last_name, :birth_year, :birth_place, :email, :death_year, :death_place, :buried_place, :gender, :created_at, :updated_at

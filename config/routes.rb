@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   # add the angular 2 default style of route
   get '/people.json/:id', controller: 'people', action: :show, format: 'json'
   
+  get '/members.json/', controller: 'members', action: :index, format: 'json'
+  
   resources :widgets
   
    devise_scope :user do 
