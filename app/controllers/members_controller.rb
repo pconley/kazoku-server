@@ -14,7 +14,7 @@ def cors_set_access_control_headers
   headers['Access-Control-Max-Age'] = "1728000"
 
    headers['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD'
-   headers['Access-Control-Allow-Headers'] = '*,x-requested-with,Content-Type,If-Modified-Since,If-None-Match'
+   headers['Access-Control-Allow-Headers'] = '*,authorization,x-requested-with,Content-Type,If-Modified-Since,If-None-Match'
 end
 
 # If this is a preflight OPTIONS request, then short-circuit the
