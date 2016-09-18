@@ -48,15 +48,10 @@ class MembersController < ApplicationController
 
 def validate_token
   begin
-
-    authorization = request.headers['Authorization']
-    puts "what is this = #{authorization}"
-    raise InvalidTokenError if authorization.nil?
-
-    # get the auth0 token from the header
-    raw_token = request.headers['HTTP_AUTHORIZATION'] #.split(' ').last
-    raise InvalidTokenError if raw_token.nil?
+    # get the auth0 jwt token from the header
+    raw_token = request.headers['HTTP_AUTHORIZATION']
     puts "--- raw token = #{raw_token}"
+    raise InvalidTokenError if raw_token.nil?
 
     # decode the raw token into it pieces
     auth0_client_secret = 'czyAb3eHSTKiSGrqm3wq-ahwbvSGN37wSDS-zx8x5FAhPy7w2V7TTi-KI6vhTNyo'
@@ -65,9 +60,13 @@ def validate_token
 
 	# make sure this token is really one of ours by checking audience
     auth0_client_id = '6VtNWmSNXVxLDCxiDQaE6xGbBAbs4Nkk'
-    raise InvalidTokenError if auth0_client_id != decoded_token[0]["aud"]
+    audience = decoded_token[0]["aud"]
+    puts "--- audience = #{audience}"
+    raise InvalidTokenError if audience.nil?
+    raise InvalidTokenError if audience != auth0_client_id
 
-    subscriber = decoded_token[0]["sub"] # subscriber
+    subscriber = decoded_token[0]["sub"]
+    puts "--- subscriber = #{subscriber}"
     raise InvalidTokenError if subscriber.nil?
 
     # use the subscriber and raw_token to get the user name
