@@ -6,7 +6,7 @@ class MembersController < ApplicationController
 
 	after_filter :cors_set_access_control_headers
 
-	# before_action :authenticate #, except: [ :index ]
+	before_action :check_id_token #, except: [ :index ]
 
 	def cors_set_access_control_headers
 		puts "--- setting access control headers"
@@ -29,10 +29,12 @@ class MembersController < ApplicationController
 
 	TOKEN = "secret"
 
-    def check_token
+    def check_id_token
     	id_token = request.headers['HTTP_AUTHORIZATION']
     	puts "--- check id token = #{id_token}"
-      	true
+    	if token_id[0..3] != "eyJ0"
+    		render :file => "public/404.html", :status => :unauthorized
+    	end
     end
   
   # GET /members.json
@@ -40,8 +42,6 @@ class MembersController < ApplicationController
     puts "*** MembersController: index search=#{params[:search]}"
 
     # request.headers.each { |key, value| puts ">>> #{key}: #{value}" }
-
-    puts "--- check token = #{check_token}"
 
     if params[:search] && params[:search].length > 0
       @people = Person.search(params[:search])
