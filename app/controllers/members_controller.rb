@@ -67,7 +67,7 @@ def validate_token
     auth0_client_id = '6VtNWmSNXVxLDCxiDQaE6xGbBAbs4Nkk'
     raise InvalidTokenError if auth0_client_id != decoded_token[0]["aud"]
 
-    subcriber = decoded_token[0]["sub"] # subscriber
+    subscriber = decoded_token[0]["sub"] # subscriber
     raise InvalidTokenError if subscriber.nil?
 
     # use the subscriber and raw_token to get the user name
