@@ -18,6 +18,7 @@ class MembersController < ApplicationController
 	end
 
 	def cors_preflight_check
+		puts "preflight check. method=#{request.method}"
 		# If this is a preflight OPTIONS request, then short-circuit the
 		# request, return only the necessary headers and return an empty
 		# text/plain.
@@ -36,7 +37,7 @@ class MembersController < ApplicationController
       authenticate_or_request_with_http_token do |token, options|
         # Compare the tokens in a time-constant manner, to mitigate
         # timing attacks.
-        console.log("token = #{token}")
+        puts "token = #{token}"
         ActiveSupport::SecurityUtils.secure_compare(
           ::Digest::SHA256.hexdigest(token),
           ::Digest::SHA256.hexdigest(TOKEN)
