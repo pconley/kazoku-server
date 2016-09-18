@@ -1,5 +1,9 @@
 class MembersController < ApplicationController
 
+	include Knock::Authenticable
+
+	before_action :authenticate # knock's version
+
 	protect_from_forgery
 
 	before_filter :cors_preflight_check

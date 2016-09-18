@@ -7,6 +7,8 @@ gem 'devise'
 gem 'therubyracer'  # If using Ruby
 gem 'less-rails-bootstrap'
 
+gem 'knock', '~> 1.4.2'
+
 group :development, :test do
   gem 'sqlite3'
 end
