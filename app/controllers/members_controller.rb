@@ -48,26 +48,35 @@ class MembersController < ApplicationController
 
 def validate_token
   begin
-    auth0_client_id = '6VtNWmSNXVxLDCxiDQaE6xGbBAbs4Nkk'
-    auth0_client_secret = 'czyAb3eHSTKiSGrqm3wq-ahwbvSGN37wSDS-zx8x5FAhPy7w2V7TTi-KI6vhTNyo'
+
     authorization = request.headers['Authorization']
+    puts "what is this = #{authorization}"
     raise InvalidTokenError if authorization.nil?
 
-    token = request.headers['HTTP_AUTHORIZATION'].split(' ').last
-    puts "--- token = #{token}"
-    decoded_token = JWT.decode(token,JWT.base64url_decode(auth0_client_secret))
-	puts "decoded token with clues = #{decoded_token}"
+    # get the auth0 token from the header
+    raw_token = request.headers['HTTP_AUTHORIZATION'] #.split(' ').last
+    raise InvalidTokenError if raw_token.nil?
+    puts "--- raw token = #{raw_token}"
 
+    # decode the raw token into it pieces
+    auth0_client_secret = 'czyAb3eHSTKiSGrqm3wq-ahwbvSGN37wSDS-zx8x5FAhPy7w2V7TTi-KI6vhTNyo'
+    decoded_token = JWT.decode(raw_token,JWT.base64url_decode(auth0_client_secret))
+	puts "--- decoded token = #{decoded_token}"
+
+	# make sure this token is really one of ours by checking audience
+    auth0_client_id = '6VtNWmSNXVxLDCxiDQaE6xGbBAbs4Nkk'
     raise InvalidTokenError if auth0_client_id != decoded_token[0]["aud"]
 
+    subcriber = decoded_token[0]["sub"] # subscriber
+    raise InvalidTokenError if subscriber.nil?
 
-	auth0url = "https://kazoku.auth0.com/api/v2/users/auth0%7C57d226d9a164af8c3bee2bee?fields=name&include_fields=true"
+    # use the subscriber and raw_token to get the user name
+	auth0url = "https://kazoku.auth0.com/api/v2/users/#{subscriber}?fields=name&include_fields=true"
 	uri = URI.parse(auth0url)
-	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+token})
-	# req.use_ssl = true
-	# req.verify_mode = OpenSSL::SSL::VERIFY_NONE 
+	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+raw_token})
 	response = Net::HTTP.start(uri.host,uri.port, :use_ssl => uri.scheme == 'https') { |http| http.request(req) }
 	puts "auth0 response = #{response.body}"
+	puts "auth0 name fiels = #{response.body['name']}"
 
 
   rescue JWT::DecodeError
