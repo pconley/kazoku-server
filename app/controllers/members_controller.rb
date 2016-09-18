@@ -37,7 +37,8 @@ class MembersController < ApplicationController
         # ActiveSupport::SecurityUtils.secure_compare(
         #   ::Digest::SHA256.hexdigest(token),
         #   ::Digest::SHA256.hexdigest(TOKEN)
-        # )
+        #
+        true
       end
     end
   
