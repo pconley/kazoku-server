@@ -78,7 +78,8 @@ def validate_token
 	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+raw_token})
 	response = Net::HTTP.start(uri.host,uri.port, :use_ssl => uri.scheme == 'https') { |http| http.request(req) }
 	puts "*** auth0 response = #{response.body}"
-	puts "auth0 name field = #{response.body['name']}"
+	json = JSON.parse(response.body)
+	puts "auth0 json = #{json}"
 
 
   rescue JWT::DecodeError
