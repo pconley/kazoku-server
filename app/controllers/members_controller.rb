@@ -25,10 +25,10 @@ class MembersController < ApplicationController
 		# request, return only the necessary headers and return an empty
 		# text/plain.
 		if request.method == :options || request.method == 'OPTIONS'
-			puts "preflight check!"
+			puts "--- preflight check!"
 		    headers['Access-Control-Allow-Origin'] = '*'
 		    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-		    headers['Access-Control-Allow-Headers'] = '*'
+		    headers['Access-Control-Allow-Headers'] = '*,authorization'
 		    headers['Access-Control-Max-Age'] = '1728000'
 		    render :text => '', :content_type => 'text/plain'
 		end
@@ -40,7 +40,7 @@ class MembersController < ApplicationController
       authenticate_or_request_with_http_token do |token, options|
         # Compare the tokens in a time-constant manner, to mitigate
         # timing attacks.
-        puts "token = #{token}"
+        puts "--- token = #{token}"
         ActiveSupport::SecurityUtils.secure_compare(
           ::Digest::SHA256.hexdigest(token),
           ::Digest::SHA256.hexdigest(TOKEN)
