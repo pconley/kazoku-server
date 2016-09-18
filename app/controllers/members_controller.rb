@@ -54,6 +54,7 @@ def validate_token
     raise InvalidTokenError if authorization.nil?
 
     token = request.headers['HTTP_AUTHORIZATION'].split(' ').last
+    puts "--- token = #{token}"
     decoded_token = JWT.decode(token,JWT.base64url_decode(auth0_client_secret))
 	puts "decoded token with clues = #{decoded_token}"
 
@@ -61,14 +62,10 @@ def validate_token
 
 
 	auth0url = "https://kazoku.auth0.com/api/v2/users/auth0%7C57d226d9a164af8c3bee2bee?fields=name&include_fields=true"
-	auth = "Bearer "+token
 	uri = URI.parse(auth0url)
-	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => auth})
-	response = Net::HTTP.start(uri.host,uri.port) do |http|
-            http.request(req)
-	end
-	puts "auth0 response = #{response}"
-
+	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+token})
+	response = Net::HTTP.start(uri.host,uri.port) { |http| http.request(req) }
+	puts "auth0 response = #{response.body}"
 
 
   rescue JWT::DecodeError
