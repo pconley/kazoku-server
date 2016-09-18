@@ -8,6 +8,7 @@ gem 'therubyracer'  # If using Ruby
 gem 'less-rails-bootstrap'
 
 gem 'jwt'
+gem "better_errors"
 
 group :development, :test do
   gem 'sqlite3'
