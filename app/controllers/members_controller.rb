@@ -30,7 +30,8 @@ class MembersController < ApplicationController
     def check_id_token
     	id_token = request.headers['HTTP_AUTHORIZATION']
     	puts "--- check id token = #{id_token[0..20]}..."
-    	if token_id[0..3] != "eyJ0"
+    	if id_token[0..3] != "eyJ0"
+    		puts "--- invalid id token"
     		render :text => "Un-authorized!", :content_type => 'text/plain', :status => 401
      	end
     end
