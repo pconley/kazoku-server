@@ -6,7 +6,7 @@ class MembersController < ApplicationController
 
 	after_filter :cors_set_access_control_headers
 
-	before_action :authenticate #, except: [ :index ]
+	# before_action :authenticate #, except: [ :index ]
 
 	def cors_set_access_control_headers
 	  headers['Access-Control-Allow-Origin'] = '*'
@@ -36,6 +36,7 @@ class MembersController < ApplicationController
       authenticate_or_request_with_http_token do |token, options|
         # Compare the tokens in a time-constant manner, to mitigate
         # timing attacks.
+        console.log("token = #{token}")
         ActiveSupport::SecurityUtils.secure_compare(
           ::Digest::SHA256.hexdigest(token),
           ::Digest::SHA256.hexdigest(TOKEN)
@@ -46,6 +47,9 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     puts "*** MembersController: index search=#{params[:search]}"
+
+    a = authenticate
+
     if params[:search] && params[:search].length > 0
       @people = Person.search(params[:search])
     else
