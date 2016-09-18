@@ -29,7 +29,7 @@ class MembersController < ApplicationController
 
 	TOKEN = "secret"
 
-    def authenticate
+    def check_token
       authenticate_or_request_with_http_token do |token, options|
         # Compare the tokens in a time-constant manner, to mitigate
         # timing attacks.
@@ -46,14 +46,12 @@ class MembersController < ApplicationController
   def index
     puts "*** MembersController: index search=#{params[:search]}"
 
-    # a = authenticate
-
-    puts "--- authenticate = #{authenticate()}"
+    #puts "--- check token = #{check_token}"
 
     if params[:search] && params[:search].length > 0
       @people = Person.search(params[:search])
     else
-      @people = Person.all
+      @people = Person.all.take(10)
     end
   end
 
