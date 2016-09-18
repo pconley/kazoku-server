@@ -11,8 +11,12 @@ Rails.application.routes.draw do
   resources :people
   # add the angular 2 default style of route
   get '/people.json/:id', controller: 'people', action: :show, format: 'json'
+
+
+  #match "/members.json" => "members#cors_preflight_check", via: :options
   
-  get '/members.json/', controller: 'members', action: :index, format: 'json'
+  #option '/members.json/', controller: 'members', action: :index, format: 'json'
+  match '/members.json/', controller: 'members', action: :index, format: 'json', via: [:get, :options]
   
   resources :widgets
   
