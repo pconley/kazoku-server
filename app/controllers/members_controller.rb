@@ -28,7 +28,7 @@ class MembersController < ApplicationController
 			puts "--- preflight check!"
 		    headers['Access-Control-Allow-Origin'] = '*'
 		    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-		    headers['Access-Control-Allow-Headers'] = '*,authorization'
+		    headers['Access-Control-Allow-Headers'] = '*,authorization,Content-Type'
 		    headers['Access-Control-Max-Age'] = '1728000'
 		    render :text => '', :content_type => 'text/plain'
 		end
