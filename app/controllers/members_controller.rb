@@ -18,10 +18,12 @@ class MembersController < ApplicationController
 	end
 
 	def cors_preflight_check
+		puts "preflight check! method = #{request.method}"
+
 		# If this is a preflight OPTIONS request, then short-circuit the
 		# request, return only the necessary headers and return an empty
 		# text/plain.
-		if request.method == :options
+		if request.method == :options || request.method == 'OPTIONS'
 			puts "preflight check!"
 		    headers['Access-Control-Allow-Origin'] = '*'
 		    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
@@ -49,7 +51,9 @@ class MembersController < ApplicationController
   def index
     puts "*** MembersController: index search=#{params[:search]}"
 
-    a = authenticate
+    # a = authenticate
+
+    puts "--- authenticate = #{authenticate()}"
 
     if params[:search] && params[:search].length > 0
       @people = Person.search(params[:search])
