@@ -30,21 +30,25 @@ class MembersController < ApplicationController
 	TOKEN = "secret"
 
     def check_token
-      authenticate_or_request_with_http_token do |token, options|
-        # Compare the tokens in a time-constant manner, to mitigate
-        # timing attacks.
-        puts "--- token = #{token}"
-        # ActiveSupport::SecurityUtils.secure_compare(
-        #   ::Digest::SHA256.hexdigest(token),
-        #   ::Digest::SHA256.hexdigest(TOKEN)
-        #
-        true
-      end
+    	puts "--- check token = #{TOKEN}"
+
+      	authenticate_or_request_with_http_token do |token, options|
+        	# Compare the tokens in a time-constant manner, to mitigate
+        	# timing attacks.
+        	puts "--- token = #{token}"
+        	# ActiveSupport::SecurityUtils.secure_compare(
+        	#   ::Digest::SHA256.hexdigest(token),
+        	#   ::Digest::SHA256.hexdigest(TOKEN)
+        	#
+        	true # pass all token
+      	end
     end
   
   # GET /members.json
   def index
     puts "*** MembersController: index search=#{params[:search]}"
+
+    request.headers.each { |key, value| puts ">>> #{key}: #{value}" }
 
     puts "--- check token = #{check_token}"
 
