@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
 
 	protect_from_forgery
-	
+
 	before_filter :cors_preflight_check
 	after_filter :cors_set_access_control_headers
 
@@ -9,9 +9,12 @@ class MembersController < ApplicationController
 
 def cors_set_access_control_headers
   headers['Access-Control-Allow-Origin'] = '*'
-  headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-  headers['Access-Control-Allow-Headers'] = '*'
+  # headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+  # headers['Access-Control-Allow-Headers'] = '*'
   headers['Access-Control-Max-Age'] = "1728000"
+
+   headers['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD'
+   headers['Access-Control-Allow-Headers'] = '*,x-requested-with,Content-Type,If-Modified-Since,If-None-Match'
 end
 
 # If this is a preflight OPTIONS request, then short-circuit the
