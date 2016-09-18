@@ -9,7 +9,7 @@ class MembersController < ApplicationController
 	# before_action :authenticate #, except: [ :index ]
 
 	def cors_set_access_control_headers
-		put "--- setting access control headers"
+		puts "--- setting access control headers"
 		headers['Access-Control-Allow-Origin'] = '*'
 		# headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
 		# headers['Access-Control-Allow-Headers'] = '*'
@@ -19,17 +19,17 @@ class MembersController < ApplicationController
 	end
 
 	def cors_preflight_check
-		puts "preflight check! method = #{request.method}"
-
 		# If this is a preflight OPTIONS request, then short-circuit the
 		# request, return only the necessary headers and return an empty
 		# text/plain.
 		if request.method == :options || request.method == 'OPTIONS'
 			puts "--- preflight check!"
-		    headers['Access-Control-Allow-Origin'] = '*'
-		    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-		    headers['Access-Control-Allow-Headers'] = '*,authorization,Content-Type'
-		    headers['Access-Control-Max-Age'] = '1728000'
+		    # headers['Access-Control-Allow-Origin'] = '*'
+		    # headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+		    # headers['Access-Control-Allow-Headers'] = '*,authorization,Content-Type'
+		    # headers['Access-Control-Max-Age'] = '1728000'
+
+		    cors_set_access_control_headers()
 		    render :text => '', :content_type => 'text/plain'
 		end
 	end
