@@ -6,7 +6,7 @@ class MembersController < ApplicationController
 
 	after_filter :cors_set_access_control_headers
 
-	before_action :check_id_token #, except: [ :index ]
+	before_filter :check_id_token #, except: [ :index ]
 
 	def cors_set_access_control_headers
 		puts "--- setting access control headers"
@@ -29,10 +29,10 @@ class MembersController < ApplicationController
 
     def check_id_token
     	id_token = request.headers['HTTP_AUTHORIZATION']
-    	puts "--- check id token = #{id_token}"
+    	puts "--- check id token = #{id_token[0..20]}..."
     	if token_id[0..3] != "eyJ0"
-    		render :text => "Un-authorized!", :status => 401
-    	end
+    		render :text => "Un-authorized!", :content_type => 'text/plain', :status => 401
+     	end
     end
   
   # GET /members.json
