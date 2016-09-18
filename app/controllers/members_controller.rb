@@ -61,7 +61,7 @@ def validate_token
 
 
 	auth0url = "https://kazoku.auth0.com/api/v2/users/auth0%7C57d226d9a164af8c3bee2bee?fields=name&include_fields=true"
-	auth = "Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+	auth = "Bearer "+token
 	uri = URI.parse(auth0url)
 	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => auth})
 	response = Net::HTTP.start(uri.host,uri.port) do |http|
