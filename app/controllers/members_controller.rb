@@ -68,9 +68,13 @@ def validate_token
     subscriber = decoded_token[0]["sub"]
     puts "--- subscriber = #{subscriber}"
     raise InvalidTokenError if subscriber.nil?
+    puts 8
 
     # use the subscriber and raw_token to get the user name
 	auth0url = "https://kazoku.auth0.com/api/v2/users/#{subscriber}?fields=name&include_fields=true"
+	puts auth0url
+	    puts 9
+
 	uri = URI.parse(auth0url)
 	puts 1
 	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+raw_token})
