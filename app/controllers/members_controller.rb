@@ -72,8 +72,11 @@ def validate_token
     # use the subscriber and raw_token to get the user name
 	auth0url = "https://kazoku.auth0.com/api/v2/users/#{subscriber}?fields=name&include_fields=true"
 	uri = URI.parse(auth0url)
+	puts 1
 	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+raw_token})
+	puts 2
 	response = Net::HTTP.start(uri.host,uri.port, :use_ssl => uri.scheme == 'https') { |http| http.request(req) }
+	puts 3
 	puts "*** auth0 response = #{response.body}"
 	#puts "auth0 name field = #{response.body['name']}"
 
