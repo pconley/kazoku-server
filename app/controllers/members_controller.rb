@@ -68,21 +68,17 @@ def validate_token
     subscriber = decoded_token[0]["sub"]
     puts "--- subscriber = #{subscriber}"
     raise InvalidTokenError if subscriber.nil?
-    puts 8
 
     # use the subscriber and raw_token to get the user name
 	auth0url = "https://kazoku.auth0.com/api/v2/users/#{subscriber}?fields=name&include_fields=true"
-	puts auth0url
-	    puts 9
+	encoded_url = URI.escape(auth0url) # the subscriber has special characters
+	puts encoded_url
 
-	uri = URI.parse(auth0url)
-	puts 1
+	uri = URI.parse(encoded_url)
 	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+raw_token})
-	puts 2
 	response = Net::HTTP.start(uri.host,uri.port, :use_ssl => uri.scheme == 'https') { |http| http.request(req) }
-	puts 3
 	puts "*** auth0 response = #{response.body}"
-	#puts "auth0 name field = #{response.body['name']}"
+	puts "auth0 name field = #{response.body['name']}"
 
 
   rescue JWT::DecodeError
