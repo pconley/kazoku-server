@@ -1,8 +1,6 @@
 class MembersController < ApplicationController
 
-	include Knock::Authenticable
-
-	before_action :authenticate # knock's version
+	require 'jwt'
 
 	protect_from_forgery
 
@@ -33,6 +31,12 @@ class MembersController < ApplicationController
 
     def check_id_token
     	id_token = request.headers['HTTP_AUTHORIZATION']
+
+		# Set password to nil and validation to false otherwise this won't work
+		decoded_token = JWT.decode id_token, nil, false
+		puts "decoded token = #{decoded_token}"
+
+
     	puts "--- check id token = #{id_token[0..20]}..."
     	if id_token[0..3] != "eyJ0"
     		puts "--- invalid id token"
