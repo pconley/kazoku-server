@@ -34,10 +34,10 @@ class MembersController < ApplicationController
         # Compare the tokens in a time-constant manner, to mitigate
         # timing attacks.
         puts "--- token = #{token}"
-        ActiveSupport::SecurityUtils.secure_compare(
-          ::Digest::SHA256.hexdigest(token),
-          ::Digest::SHA256.hexdigest(TOKEN)
-        )
+        # ActiveSupport::SecurityUtils.secure_compare(
+        #   ::Digest::SHA256.hexdigest(token),
+        #   ::Digest::SHA256.hexdigest(TOKEN)
+        # )
       end
     end
   
