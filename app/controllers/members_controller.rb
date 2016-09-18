@@ -65,6 +65,7 @@ def validate_token
 	uri = URI.parse(auth0url)
 	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+token})
 	req.use_ssl = true
+	req.verify_mode = OpenSSL::SSL::VERIFY_NONE 
 	response = Net::HTTP.start(uri.host,uri.port) { |http| http.request(req) }
 	puts "auth0 response = #{response.body}"
 
