@@ -27,13 +27,11 @@ class MembersController < ApplicationController
 		end
 	end
 
-	TOKEN = "secret"
-
     def check_id_token
     	id_token = request.headers['HTTP_AUTHORIZATION']
     	puts "--- check id token = #{id_token}"
     	if token_id[0..3] != "eyJ0"
-    		render :file => "public/404.html", :status => :unauthorized
+    		render :text => "Un-authorized!", :status => 401
     	end
     end
   
