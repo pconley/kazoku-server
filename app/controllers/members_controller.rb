@@ -43,10 +43,31 @@ class MembersController < ApplicationController
     		render :text => "Un-authorized!", :content_type => 'text/plain', :status => 401
      	end
     end
+
+    class InvalidTokenError < StandardError; end
+
+def validate_token
+  begin
+    auth0_client_id = '6VtNWmSNXVxLDCxiDQaE6xGbBAbs4Nkk'
+    auth0_client_secret = 'czyAb3eHSTKiSGrqm3wq-ahwbvSGN37wSDS-zx8x5FAhPy7w2V7TTi-KI6vhTNyo'
+    authorization = request.headers['Authorization']
+    raise InvalidTokenError if authorization.nil?
+
+    token = request.headers['HTTP_AUTHORIZATION'].split(' ').last
+    decoded_token = JWT.decode(token,JWT.base64url_decode(auth0_client_secret))
+	puts "decoded token with clues = #{decoded_token}"
+
+    raise InvalidTokenError if auth0_client_id != decoded_token[0]["aud"]
+  rescue JWT::DecodeError
+    raise InvalidTokenError
+  end
+end
   
   # GET /members.json
   def index
     puts "*** MembersController: index search=#{params[:search]}"
+
+    validate_token
 
     # request.headers.each { |key, value| puts ">>> #{key}: #{value}" }
 
