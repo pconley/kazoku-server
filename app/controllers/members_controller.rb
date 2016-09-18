@@ -8,7 +8,7 @@ class MembersController < ApplicationController
 
 	after_filter :cors_set_access_control_headers
 
-	before_filter :check_id_token #, except: [ :index ]
+	# before_filter :check_id_token #, except: [ :index ]
 
 	def cors_set_access_control_headers
 		puts "--- setting access control headers"
@@ -80,6 +80,7 @@ def validate_token
 	puts "*** auth0 response = #{response.body}"
 	json = JSON.parse(response.body)
 	puts "auth0 json = #{json}"
+	puts "auth0 name = #{json['name']}"
 
 
   rescue JWT::DecodeError
