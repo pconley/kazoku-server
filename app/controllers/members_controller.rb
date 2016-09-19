@@ -81,6 +81,12 @@ def validate_token
 	json = JSON.parse(response.body)
 	puts "auth0 json = #{json}"
 	puts "auth0 name = #{json['name']}"
+	meta = json['app_metadata']
+	puts "auth0 meta = #{meta}"
+	if meta
+		role = meta['role']
+		puts "auth0 role = #{role}"
+	end
 
 
   rescue JWT::DecodeError
