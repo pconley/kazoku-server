@@ -70,7 +70,7 @@ def validate_token
     raise InvalidTokenError if subscriber.nil?
 
     # use the subscriber and raw_token to get the user name
-	auth0url = "https://kazoku.auth0.com/api/v2/users/#{subscriber}?fields=name&include_fields=true"
+	auth0url = "https://kazoku.auth0.com/api/v2/users/#{subscriber}?include_fields=true"
 	encoded_url = URI.escape(auth0url) # the subscriber has special characters
 	puts encoded_url
 

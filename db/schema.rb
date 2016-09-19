@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160901013554) do
+ActiveRecord::Schema.define(version: 20160919131336) do
 
   create_table "families", force: :cascade do |t|
     t.string   "name"
@@ -74,8 +74,13 @@ ActiveRecord::Schema.define(version: 20160901013554) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "sub"
+    t.datetime "first_access_at"
+    t.datetime "last_access_at"
+    t.integer  "access_count",           default: 0,  null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["sub"], name: "index_users_on_sub", unique: true
   end
 
   create_table "widgets", force: :cascade do |t|
