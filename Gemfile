@@ -11,6 +11,8 @@ gem 'jwt'
 gem "better_errors"
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.5'
+  gem 'rails-controller-testing'
   gem 'sqlite3'
 end
 

@@ -4,11 +4,12 @@ class ApiController < ApplicationController
 
 	protect_from_forgery
 
-	before_filter :cors_preflight_check
+	before_action :cors_preflight_check
 
-	after_filter :cors_set_access_control_headers
+	before_action :validate_token #, except: [ :index ]
 
-	before_filter :validate_token #, except: [ :index ]
+	after_action :cors_set_access_control_headers
+
 
 	def cors_set_access_control_headers
 		puts "--- setting access control headers"
@@ -29,24 +30,26 @@ class ApiController < ApplicationController
 		end
 	end
 
-  #   def check_id_token
-  #   	id_token = request.headers['HTTP_AUTHORIZATION']
-
-		# # Set password to nil and validation to false otherwise this won't work
-		# decoded_token = JWT.decode id_token, nil, false
-		# puts "decoded token = #{decoded_token}"
-
-
-  #   	puts "--- check id token = #{id_token[0..20]}..."
-  #   	if id_token[0..3] != "eyJ0"
-  #   		puts "--- invalid id token"
-  #   		render :text => "Un-authorized!", :content_type => 'text/plain', :status => 401
-  #    	end
-  #   end
-
-    class InvalidTokenError < StandardError; end
-
 	def validate_token
+	    # get the auth0 jwt token from the request header
+	    raw_token = request.headers['HTTP_AUTHORIZATION']
+	    #puts "--- raw token = #{raw_token}"
+	    return false if raw_token.nil?
+
+		profile = fetch_auth0_profile(raw_token)
+		#puts "auth0 json = #{json}"
+
+		meta = json['app_metadata']
+		return false if meta.nil?
+
+		role = meta['role']
+		return false if role.nil?
+
+		puts "*** ApiController#validate_token auth0 role = #{role}"
+		return role == "user" || role == "admin"
+	end
+
+	def fetch_auth0_profile(raw_token)
 	    # get the auth0 jwt token from the request header
 	    raw_token = request.headers['HTTP_AUTHORIZATION']
 	    #puts "--- raw token = #{raw_token}"
@@ -77,20 +80,12 @@ class ApiController < ApplicationController
 		#puts "*** auth0 response = #{response.body}"
 
 		begin
-			json = JSON.parse(response.body)
-			#puts "auth0 json = #{json}"
+			profile = JSON.parse(response.body)
 		rescue JWT::DecodeError
 	    	raise InvalidTokenError
 	  	end
 
-		meta = json['app_metadata']
-		return false if meta.nil?
-
-		role = meta['role']
-		return false if role.nil?
-
-		puts "*** ApiController#validate_token auth0 role = #{role}"
-		return role == "user" || role == "admin"
+	  	return profile
 	end
 
 end
