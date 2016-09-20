@@ -8,7 +8,7 @@ class MembersController < ApplicationController
 
 	after_filter :cors_set_access_control_headers
 
-	# before_filter :check_id_token #, except: [ :index ]
+	before_filter :validate_token #, except: [ :index ]
 
 	def cors_set_access_control_headers
 		puts "--- setting access control headers"
@@ -29,78 +29,73 @@ class MembersController < ApplicationController
 		end
 	end
 
-    def check_id_token
-    	id_token = request.headers['HTTP_AUTHORIZATION']
+  #   def check_id_token
+  #   	id_token = request.headers['HTTP_AUTHORIZATION']
 
-		# Set password to nil and validation to false otherwise this won't work
-		decoded_token = JWT.decode id_token, nil, false
-		puts "decoded token = #{decoded_token}"
+		# # Set password to nil and validation to false otherwise this won't work
+		# decoded_token = JWT.decode id_token, nil, false
+		# puts "decoded token = #{decoded_token}"
 
 
-    	puts "--- check id token = #{id_token[0..20]}..."
-    	if id_token[0..3] != "eyJ0"
-    		puts "--- invalid id token"
-    		render :text => "Un-authorized!", :content_type => 'text/plain', :status => 401
-     	end
-    end
+  #   	puts "--- check id token = #{id_token[0..20]}..."
+  #   	if id_token[0..3] != "eyJ0"
+  #   		puts "--- invalid id token"
+  #   		render :text => "Un-authorized!", :content_type => 'text/plain', :status => 401
+  #    	end
+  #   end
 
     class InvalidTokenError < StandardError; end
 
-def validate_token
-  begin
-    # get the auth0 jwt token from the header
-    raw_token = request.headers['HTTP_AUTHORIZATION']
-    puts "--- raw token = #{raw_token}"
-    raise InvalidTokenError if raw_token.nil?
+	def validate_token
+	    # get the auth0 jwt token from the request header
+	    raw_token = request.headers['HTTP_AUTHORIZATION']
+	    puts "--- raw token = #{raw_token}"
+	    return false if raw_token.nil?
 
-    # decode the raw token into it pieces
-    auth0_client_secret = 'czyAb3eHSTKiSGrqm3wq-ahwbvSGN37wSDS-zx8x5FAhPy7w2V7TTi-KI6vhTNyo'
-    decoded_token = JWT.decode(raw_token,JWT.base64url_decode(auth0_client_secret))
-	puts "--- decoded token = #{decoded_token}"
+	    # use the client secret to decode the raw token into it pieces
+	    auth0_client_secret = 'czyAb3eHSTKiSGrqm3wq-ahwbvSGN37wSDS-zx8x5FAhPy7w2V7TTi-KI6vhTNyo'
+	    decoded_token = JWT.decode(raw_token,JWT.base64url_decode(auth0_client_secret))
+		puts "--- decoded token = #{decoded_token}"
 
-	# make sure this token is really one of ours by checking audience
-    auth0_client_id = '6VtNWmSNXVxLDCxiDQaE6xGbBAbs4Nkk'
-    audience = decoded_token[0]["aud"]
-    puts "--- audience = #{audience}"
-    raise InvalidTokenError if audience.nil?
-    raise InvalidTokenError if audience != auth0_client_id
+		# make sure this token is really one of ours by checking audience
+	    auth0_client_id = '6VtNWmSNXVxLDCxiDQaE6xGbBAbs4Nkk'
+	    audience = decoded_token[0]["aud"]
+	    puts "--- audience = #{audience}"
+	    return false if audience.nil?
+	    return false if audience != auth0_client_id
 
-    subscriber = decoded_token[0]["sub"]
-    puts "--- subscriber = #{subscriber}"
-    raise InvalidTokenError if subscriber.nil?
+	    subscriber = decoded_token[0]["sub"]
+	    puts "--- subscriber = #{subscriber}"
+	    return false if subscriber.nil?
 
-    # use the subscriber and raw_token to get the user name
-	auth0url = "https://kazoku.auth0.com/api/v2/users/#{subscriber}?include_fields=true"
-	encoded_url = URI.escape(auth0url) # the subscriber has special characters
-	puts encoded_url
+	    # use the subscriber and raw_token to get the user profile information
+	    # by making a call to Auth0 server
+		auth0url = "https://kazoku.auth0.com/api/v2/users/#{subscriber}?include_fields=true"
+		uri = URI.parse(URI.escape(auth0url)) # the subscriber has special characters
+		req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+raw_token})
+		response = Net::HTTP.start(uri.host,uri.port, :use_ssl => uri.scheme == 'https') { |http| http.request(req) }
+		puts "*** auth0 response = #{response.body}"
 
-	uri = URI.parse(encoded_url)
-	req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+raw_token})
-	response = Net::HTTP.start(uri.host,uri.port, :use_ssl => uri.scheme == 'https') { |http| http.request(req) }
-	puts "*** auth0 response = #{response.body}"
-	json = JSON.parse(response.body)
-	puts "auth0 json = #{json}"
-	puts "auth0 name = #{json['name']}"
-	meta = json['app_metadata']
-	puts "auth0 meta = #{meta}"
-	if meta
+		begin
+			json = JSON.parse(response.body)
+			puts "auth0 json = #{json}"
+		rescue JWT::DecodeError
+	    	raise InvalidTokenError
+	  	end
+
+		meta = json['app_metadata']
+		return false if meta.nil?
+
 		role = meta['role']
+		return false if role.nil?
+
 		puts "auth0 role = #{role}"
+		return role == "user" || role == "admin"
 	end
-
-
-  rescue JWT::DecodeError
-    raise InvalidTokenError
-  end
-end
   
   # GET /members.json
   def index
     puts "*** MembersController: index search=#{params[:search]}"
-
-    validate_token
-
-    # request.headers.each { |key, value| puts ">>> #{key}: #{value}" }
 
     if params[:search] && params[:search].length > 0
       @people = Person.search(params[:search])
