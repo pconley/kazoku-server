@@ -36,7 +36,7 @@ class ApiController < ApplicationController
 	    #puts "--- raw token = #{raw_token}"
 	    return false if raw_token.nil?
 
-		profile = fetch_auth0_profile(raw_token)
+		profile = AuthHelper::get_auth0_profile(raw_token)
 		#puts "auth0 profile = #{profile}"
 
 		meta = profile['app_metadata']
@@ -49,7 +49,7 @@ class ApiController < ApplicationController
 		return role == "user" || role == "admin"
 	end
 
-	def fetch_auth0_profile(raw_token)
+	def xfetch_auth0_profile(raw_token)
 	    # get the auth0 jwt token from the request header
 	    raw_token = request.headers['HTTP_AUTHORIZATION']
 	    #puts "--- raw token = #{raw_token}"
