@@ -37,9 +37,9 @@ class ApiController < ApplicationController
 	    return false if raw_token.nil?
 
 		profile = fetch_auth0_profile(raw_token)
-		#puts "auth0 json = #{json}"
+		#puts "auth0 profile = #{profile}"
 
-		meta = json['app_metadata']
+		meta = profile['app_metadata']
 		return false if meta.nil?
 
 		role = meta['role']
