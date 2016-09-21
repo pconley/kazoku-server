@@ -12,10 +12,14 @@ module AuthHelper
 	    sub = extract_subscriber(id_token)
 
 	    # TODO: look up and return profile in table or cache
+	    cached = $redis.get(sub)
+	    puts "*** cached: #{sub} = #{cached}"
 
-	    profile = fetch_auth0_profile(sub,id_token)	 
+	    # fetch the profile from the auth0 server
+	    profile = fetch_auth0_profile(sub,id_token)	
 
 	    # TODO: save profile to the table or cach for next
+	    $redis.set(sub,"i was here") 
 
 	    return profile   
 	end

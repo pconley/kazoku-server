@@ -1,0 +1,5 @@
+redis
+
+installed version 3.2.3 on 9/21/2016
+
+need to start redis-server to have the db avaialble

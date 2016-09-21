@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # ruby '2.2.4' # heroku
 
 gem 'devise'
-
+gem 'redis'
 gem 'therubyracer'  # If using Ruby
 gem 'less-rails-bootstrap'
 
