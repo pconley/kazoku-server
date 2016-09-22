@@ -66,7 +66,7 @@ class ApiController < ApplicationController
 
 	    # TODO: save profile to the table or cach for next
 	    $redis.set(sub,"i was here") 
-	    $redis.ttl(sub,10*60) # 10 minutes
+	    $redis.expire(sub,10*60) # 10 minutes
 
 	    return profile   
 	end
