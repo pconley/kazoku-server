@@ -52,23 +52,29 @@ class ApiController < ApplicationController
 	AUTH0_CLIENT_SECRET = 'czyAb3eHSTKiSGrqm3wq-ahwbvSGN37wSDS-zx8x5FAhPy7w2V7TTi-KI6vhTNyo'
 
 	def get_auth0_profile(id_token)
-
-	    puts "*** AuthHelper#get_auth0_profile. token = #{id_token}"
-
+	    puts "*** ApiController#get_auth0_profile. token = #{id_token}"
 	    sub = extract_subscriber(id_token)
-
-	    # TODO: look up and return profile in table or cache
-	    cached = $redis.get(sub)
-	    puts "*** cached: #{sub} = #{cached}"
-
-	    # fetch the profile from the auth0 server
-	    profile = fetch_auth0_profile(sub,id_token)	
-
-	    # TODO: save profile to the table or cach for next
-	    $redis.set(sub,"i was here") 
-	    $redis.expire(sub,10*60) # 10 minutes
-
-	    return profile   
+	    # first, try to fetch the profile from the cache
+	    profile_json = $redis.get(sub)
+	    puts "*** cached: #{sub} = #{profile_json}"
+	    if !profile_json
+	    	# but if it is not there, then try to 
+	    	# fetch the profile from the auth0 server
+	    	puts "*** using cached profile"
+	    	profile_json = fetch_auth0_profile(sub,id_token)
+	    end
+	    # we may still not have a valid profile if the
+	    # entire transaction is bad, but if we do
+	    if profile_json
+	    	# save the profile to the cache
+	    	$redis.set(sub,profile_json) 
+	    	# but set to expire in N minutes
+	    	$redis.expire(sub,10*60)
+	    	# next line may throw: JSON::ParserError
+	    	profile = JSON.parse(profile_json)
+	    	return profile
+	    end
+	    return false   
 	end
 
 	def extract_subscriber(id_token)
@@ -82,7 +88,7 @@ class ApiController < ApplicationController
 	end
 
 	def fetch_auth0_profile(subscriber,id_token)
-	    puts "*** AuthHelper#fetch_auth0_profile. subscriber = #{subscriber}"
+	    puts "*** ApiController#fetch_auth0_profile. subscriber = #{subscriber}"
 	    return false if id_token.nil?
 	    return false if subscriber.nil?
 
@@ -93,50 +99,7 @@ class ApiController < ApplicationController
 		response = Net::HTTP.start(uri.host,uri.port, :use_ssl => uri.scheme == 'https') { |http| http.request(req) }
 		puts "*** auth0 response = #{response.body}"
 
-		# next line may throw: JSON::ParserError
-		profile = JSON.parse(response.body)
-
-	  	return profile
-	end
-
-
-	def xfetch_auth0_profile(raw_token)
-	    # get the auth0 jwt token from the request header
-	    raw_token = request.headers['HTTP_AUTHORIZATION']
-	    #puts "--- raw token = #{raw_token}"
-	    return false if raw_token.nil?
-
-	    # use the client secret to decode the raw token into it pieces
-	    auth0_client_secret = 'czyAb3eHSTKiSGrqm3wq-ahwbvSGN37wSDS-zx8x5FAhPy7w2V7TTi-KI6vhTNyo'
-	    decoded_token = JWT.decode(raw_token,JWT.base64url_decode(auth0_client_secret))
-		#puts "--- decoded token = #{decoded_token}"
-
-		# make sure this token is really one of ours by checking audience
-	    auth0_client_id = '6VtNWmSNXVxLDCxiDQaE6xGbBAbs4Nkk'
-	    audience = decoded_token[0]["aud"]
-	    #puts "--- audience = #{audience}"
-	    return false if audience.nil?
-	    return false if audience != auth0_client_id
-
-	    subscriber = decoded_token[0]["sub"]
-	    #puts "--- subscriber = #{subscriber}"
-	    return false if subscriber.nil?
-
-	    # use the subscriber and raw_token to get the user profile information
-	    # by making a call to Auth0 server
-		auth0url = "https://kazoku.auth0.com/api/v2/users/#{subscriber}?include_fields=true"
-		uri = URI.parse(URI.escape(auth0url)) # the subscriber has special characters
-		req = Net::HTTP::Get.new(uri.to_s,{'Authorization' => "Bearer "+raw_token})
-		response = Net::HTTP.start(uri.host,uri.port, :use_ssl => uri.scheme == 'https') { |http| http.request(req) }
-		#puts "*** auth0 response = #{response.body}"
-
-		begin
-			profile = JSON.parse(response.body)
-		rescue JWT::DecodeError
-	    	raise InvalidTokenError
-	  	end
-
-	  	return profile
+	  	return response.body # is the profile in a json string
 	end
 
 end
