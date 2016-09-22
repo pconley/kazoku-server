@@ -10,7 +10,6 @@ class ApiController < ApplicationController
 
 	after_action :cors_set_access_control_headers
 
-
 	def cors_set_access_control_headers
 		puts "--- setting access control headers"
 		headers['Access-Control-Allow-Origin'] = '*'
@@ -67,6 +66,7 @@ class ApiController < ApplicationController
 
 	    # TODO: save profile to the table or cach for next
 	    $redis.set(sub,"i was here") 
+	    $redis.ttl(sub,10*60) # 10 minutes
 
 	    return profile   
 	end
