@@ -55,26 +55,26 @@ class ApiController < ApplicationController
 	    puts "*** ApiController#get_auth0_profile. token = #{id_token}"
 	    sub = extract_subscriber(id_token)
 	    # first, try to fetch the profile from the cache
-	    profile_json = $redis.get(sub)
-	    puts "*** cached: #{sub} = #{profile_json}"
-	    if !profile_json
-	    	# but if it is not there, then try to 
-	    	# fetch the profile from the auth0 server
-	    	puts "*** using cached profile"
-	    	profile_json = fetch_auth0_profile(sub,id_token)
-	    end
-	    # we may still not have a valid profile if the
-	    # entire transaction is bad, but if we do
-	    if profile_json
-	    	# save the profile to the cache
-	    	$redis.set(sub,profile_json) 
-	    	# but set to expire in N minutes
-	    	$redis.expire(sub,10*60)
+	    profile_cache= $redis.get(sub)
+	    if profile_cache
+	    	puts "*** using CACHED profile = #{profile_cache}"
 	    	# next line may throw: JSON::ParserError
-	    	profile = JSON.parse(profile_json)
-	    	return profile
-	    end
-	    return false   
+	    	return JSON.parse(profile_cache)
+	    else
+	    	# fetch the profile from the auth0 server
+	    	profile_fetch = fetch_auth0_profile(sub,id_token)
+	    	puts "*** using FETCHED profile = #{profile_fetch}"
+		    # may still not have a valid profile if invalid
+		    return false if profile_fetch.nil?
+		    # next line may throw: JSON::ParserError
+		    # so we parse BEFORE we cache the profile
+		    profile = JSON.parse(profile_fetch)
+		    # save the profile to the cache
+		    $redis.set(sub,profile_fetch) 
+		    # but set to expire in N minutes
+		    $redis.expire(sub,10*60)
+		    return  profile
+		end
 	end
 
 	def extract_subscriber(id_token)
