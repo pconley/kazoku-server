@@ -34,10 +34,7 @@ class ApiController < ApplicationController
 	    raw_token = request.headers['HTTP_AUTHORIZATION']
 	    puts "--- raw token = #{raw_token}"
 	    unless raw_token
-	    	puts "--- no raw token"
-	    	#render :text => '', :content_type => 'text/plain', status: 401
 	    	render :json => { :errors => ['missing token'] }, status: 401
-	    	#render head: :unauthorized
 	    	return false
 	    end
 
