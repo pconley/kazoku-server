@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   #match "/members.json" => "members#cors_preflight_check", via: :options
   
   #option '/members.json/', controller: 'members', action: :index, format: 'json'
-  match '/members.json/', controller: 'members', action: :index, format: 'json', via: [:get, :options]
+  match '/members.json', controller: 'members', action: :index, format: 'json', via: [:get, :options]
   
   resources :widgets
   
