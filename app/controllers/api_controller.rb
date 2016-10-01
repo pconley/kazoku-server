@@ -30,25 +30,31 @@ class ApiController < ApplicationController
 	end
 
 	def validate_token
+		@current_profile = nil
+
 	    # get the auth0 jwt token from the request header
 	    raw_token = request.headers['HTTP_AUTHORIZATION']
-	    puts "--- raw token = #{raw_token}"
+	    puts "*** ApiController#validate_token raw_token = #{raw_token}"
 	    unless raw_token
 	    	render :json => { :errors => ['missing token'] }, status: 401
 	    	return false
 	    end
 
-		profile = Profile.find(raw_token)
-		#puts "auth0 profile = #{profile}"
+		profile = ProfileService.find(raw_token)
+		puts "*** ApiController#validate_token profile = #{profile}"
+	    unless profile
+	    	render :json => { :errors => ['invalid token'] }, status: 401
+	    	return false
+	    end
 
-		meta = profile['app_metadata']
-		return false if meta.nil?
+		is_authorized = ['user','admin'].include? profile.role
+		puts "*** ApiController#validate_token authorized = #{is_authorized}"
+		unless is_authorized
+	    	render :json => { :errors => ['invalid profile'] }, status: 401
+	    	return false
+	    end
 
-		role = meta['role']
-		return false if role.nil?
-
-		puts "*** ApiController#validate_token auth0 role = #{role}"
-		return role == "user" || role == "admin"
+	    @current_profile = profile
 	end
 
 end
