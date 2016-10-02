@@ -23,7 +23,7 @@ class ApiController < ApplicationController
 		# request, return only the necessary headers and return an empty
 		# text/plain.
 		if request.method == :options || request.method == 'OPTIONS'
-			puts "--- preflight check!"
+			#puts "--- preflight check!"
 		    cors_set_access_control_headers()
 		    render :text => '', :content_type => 'text/plain'
 		end
@@ -34,21 +34,21 @@ class ApiController < ApplicationController
 
 	    # get the auth0 jwt token from the request header
 	    raw_token = request.headers['HTTP_AUTHORIZATION']
-	    puts "*** ApiController#validate_token raw_token = #{raw_token}"
+	    #puts "*** ApiController#validate_token raw_token = #{raw_token}"
 	    unless raw_token
 	    	render :json => { :errors => ['missing token'] }, status: 401
 	    	return false
 	    end
 
 		profile = ProfileService.find(raw_token)
-		puts "*** ApiController#validate_token profile = #{profile}"
+		#puts "*** ApiController#validate_token profile = #{profile}"
 	    unless profile
 	    	render :json => { :errors => ['invalid token'] }, status: 401
 	    	return false
 	    end
 
 		is_authorized = ['user','admin'].include? profile.role
-		puts "*** ApiController#validate_token authorized = #{is_authorized}"
+		#puts "*** ApiController#validate_token authorized = #{is_authorized}"
 		unless is_authorized
 	    	render :json => { :errors => ['invalid profile'] }, status: 401
 	    	return false

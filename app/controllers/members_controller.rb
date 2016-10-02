@@ -9,6 +9,18 @@ class MembersController < ApiController
     else
       @people = Person.all.take(10)
     end
+
+    # now limit to the requested page
+    if params[:page] && params[:page].length > 0
+      page = params[:page].to_i
+      page = 1 if page < 1
+      page-- # zero based
+      page_size = 3
+      start = page * page_size
+      finish = start + page_size
+      @people = @people[start..finish]
+    end
+
   end
 
 end
