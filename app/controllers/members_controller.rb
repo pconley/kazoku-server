@@ -7,7 +7,7 @@ class MembersController < ApiController
     if params[:search] && params[:search].length > 0
       @people = Person.search(params[:search])
     else
-      @people = Person.all.take(16)
+      @people = Person.all.take(100)
     end
 
     # now limit to the requested page
@@ -15,7 +15,7 @@ class MembersController < ApiController
       page = params[:page].to_i
       page = 1 if page < 1
       page-- # zero based
-      page_size = 3
+      page_size = 20
       start = page * page_size
       finish = start + page_size - 1
       @people = @people[start..finish]
