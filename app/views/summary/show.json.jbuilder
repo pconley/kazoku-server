@@ -1,0 +1,1 @@
+json.partial! "summary/summary", summary: @summary

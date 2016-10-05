@@ -1,0 +1,1 @@
+json.extract! summary, :member_count, :family_count

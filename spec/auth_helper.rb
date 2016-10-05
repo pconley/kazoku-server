@@ -6,7 +6,7 @@ module AuthHelper
 
   	def valid_token
   		# this value must be refreshed every 24 hours or so by copying from the client console log for pat1@conley.com
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2them9rdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTdkMjI2ZDlhMTY0YWY4YzNiZWUyYmVlIiwiYXVkIjoiNlZ0TldtU05YVnhMREN4aURRYUU2eEdiQkFiczROa2siLCJleHAiOjE0NzU0NTQzNzgsImlhdCI6MTQ3NTQxODM3OH0.S6shpkJFpDBtqhSxZ5q99wodcIFQmqRHT9ITtL01ABY'
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2them9rdS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTdkMjI2ZDlhMTY0YWY4YzNiZWUyYmVlIiwiYXVkIjoiNlZ0TldtU05YVnhMREN4aURRYUU2eEdiQkFiczROa2siLCJleHAiOjE0NzU3MTAxNDQsImlhdCI6MTQ3NTY3NDE0NH0.hWTyw_4yRVrt_iputuYL09ypIo9HRRjyifgTqg3OUCQ'
   	end
 
   	def expired_token
