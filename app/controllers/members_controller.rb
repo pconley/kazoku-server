@@ -18,6 +18,7 @@ class MembersController < ApiController
       page_size = 20
       start = page * page_size
       finish = start + page_size - 1
+      puts "*** #{start} :: #{finish}"
       @people = @people[start..finish]
     end
 
