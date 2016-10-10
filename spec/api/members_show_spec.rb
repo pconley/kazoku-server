@@ -11,7 +11,7 @@ describe "API Members::show", :type => :request do
     @mom = Person.create!(first_name: 'mom')
     @dad = Person.create!(first_name: 'dad')
 
-    fam = Family.create!(name: 'fam1', wife: @mom, husband: @dad, children: [@p1,@p2])
+    fam = Family.create!(name: 'fam1', people: [@mom,@dad], children: [@p1,@p2])
 
   end
 
