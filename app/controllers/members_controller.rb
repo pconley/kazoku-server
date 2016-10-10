@@ -1,4 +1,10 @@
 class MembersController < ApiController
+
+  # GET /members/1.json
+  def show
+  	@person = Person.find(params[:id])
+  end
+
   
   # GET /members.json
   def index

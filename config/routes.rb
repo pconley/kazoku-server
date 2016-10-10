@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
 
   match '/summary.json', controller: 'summary', action: :show, format: 'json', via: [:get, :options]
+
+  resources :members, only: [:show], format: 'json'
   match '/members.json', controller: 'members', action: :index, format: 'json', via: [:get, :options]
   
   resources :widgets

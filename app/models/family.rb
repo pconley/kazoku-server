@@ -9,7 +9,7 @@ class Family < ApplicationRecord
   has_many :people, through: :memberships
   
   def to_s
-    "<Family##{id} #{key}>"
+    "<Family##{id} #{key} #{name}>"
   end
   
   def display_name

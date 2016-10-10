@@ -1,6 +1,7 @@
 class Person < ApplicationRecord
   
-  #belongs_to :clan, class_name: 'Family', optional: true
+  # a person belongs to one family, that is... 
+  # a person is a child of one and only one family
   belongs_to :family, optional: true
   
   has_many :memberships
@@ -23,6 +24,13 @@ class Person < ApplicationRecord
     search_text += params[:birth_year].to_s + ' ' if params[:birth_year]
     search_text += params[:death_year].to_s + ' ' if params[:death_year]
     return search_text
+  end
+
+  def parents
+    result = []
+    result << family.wife if family && family.wife
+    result << family.husband if family && family.husband
+    result
   end
   
   def description
