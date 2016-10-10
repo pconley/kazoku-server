@@ -32,7 +32,7 @@ class ApiController < ApplicationController
 	def validate_token
 		@current_profile = nil
 
-		request_headers.each {|key, value| puts "*** header #{key} is #{value}" }
+		request.headers.each {|key, value| puts "*** header #{key} is #{value}" }
 
 	    # get the auth0 jwt token from the request header
 	    raw_token = request.headers['HTTP_AUTHORIZATION']
