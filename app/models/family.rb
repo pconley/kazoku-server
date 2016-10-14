@@ -1,12 +1,12 @@
 class Family < ApplicationRecord
   
-  belongs_to :wife, class_name: 'Person', optional: true
-  belongs_to :husband, class_name: 'Person', optional: true
+  # belongs_to :wife, class_name: 'Member', optional: true
+  # belongs_to :husband, class_name: 'Member', optional: true
   
-  has_many :children, class_name: 'Person', foreign_key: "family_id"
+  has_many :children, class_name: 'Member', foreign_key: "family_id"
   
   has_many :memberships
-  has_many :people, through: :memberships
+  has_many :members, through: :memberships
   
   def to_s
     "<Family##{id} #{key} #{name}>"
@@ -17,9 +17,9 @@ class Family < ApplicationRecord
   end
   
   def built_name
-    name = people[0] ? people[0].first_name : ''
-    name += ' & ' if name.length > 0 && people[1]
-    name += people[1].first_name if people[1]
+    name = member[0] ? member[0].first_name : ''
+    name += ' & ' if name.length > 0 && member[1]
+    name += member[1].first_name if member[1]
     return name
   end
   

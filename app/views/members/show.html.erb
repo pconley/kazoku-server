@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+  <br><strong>Name:</strong>
+  <%= @member.display_name %>
+
+  <br><strong>Gender:</strong>
+  <%= @member.gender %>
+
+  <br><strong>Key:</strong>
+  <%= @member.key %>
+
+  <br><strong>Famc key:</strong>
+  <%= @member.famc_key %>
+
+  <br><strong>Fams keys:</strong>
+  <%= @member.fams_keys %>
+
+<br><br>EVENTS<br>
+  <table>
+  <thead>
+    <tr>
+      <th>Event&nbsp;&nbsp;&nbsp;</th>
+      <th>Date&nbsp;&nbsp;&nbsp;</th>
+      <th>Place&nbsp;&nbsp;&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @member.events.each do |event| %>
+      <tr>
+        <td><%= event.kind %></td>
+        <td><%= event.year %></td>
+        <td><%= event.place %></td>
+       </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'Edit', edit_member_path(@member) %> |
+<%= link_to 'Back', members_path %>

@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919131336) do
+ActiveRecord::Schema.define(version: 20161014132013) do
+
+  create_table "events", force: :cascade do |t|
+    t.string   "kind"
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "day"
+    t.string   "date_string"
+    t.string   "place"
+    t.string   "state"
+    t.string   "country"
+    t.string   "description"
+    t.string   "search_text"
+    t.integer  "member_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["member_id"], name: "index_event_on_member_id"
+  end
 
   create_table "families", force: :cascade do |t|
     t.string   "name"
@@ -24,12 +41,29 @@ ActiveRecord::Schema.define(version: 20160919131336) do
     t.text     "search_text"
   end
 
+  create_table "members", force: :cascade do |t|
+    t.string   "last_name"
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "common_name"
+    t.string   "gender"
+    t.string   "key"
+    t.string   "famc_key"
+    t.string   "fams_keys"
+    t.string   "email"
+    t.string   "rawtext"
+    t.string   "search_text"
+    t.integer  "family_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["family_id"], name: "index_member_on_family_id"
+  end
+
   create_table "memberships", force: :cascade do |t|
     t.string  "role"
-    t.integer "person_id"
     t.integer "family_id"
+    t.integer "member_id"
     t.index ["family_id"], name: "index_memberships_on_family_id"
-    t.index ["person_id"], name: "index_memberships_on_person_id"
   end
 
   create_table "people", force: :cascade do |t|

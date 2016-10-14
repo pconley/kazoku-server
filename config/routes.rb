@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :members
   resources :families
   root to: "home#index"
   
