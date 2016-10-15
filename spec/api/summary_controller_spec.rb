@@ -11,7 +11,7 @@ describe "API Summary", :type => :request do
   end
 
   def do_show()
-    get '/summary', headers: { 'HTTP_AUTHORIZATION' => valid_token },
+    get '/api/v1/summary', headers: { 'HTTP_AUTHORIZATION' => valid_token },
           # params: { id: 1 },
           # env: { 'action_dispatch.custom' => 'custom' },
           xhr: true, as: :json

@@ -5,11 +5,11 @@ describe "API Members Paging", :type => :request do
   include AuthHelper # example tokens
 
   before :each do
-    [0..20].each { |n| Person.create! }
+    [0..20].each { |n| Member.create! }
   end
 
   def do_get(page)
-    get '/members', headers: { 'HTTP_AUTHORIZATION' => valid_token },
+    get '/api/v1/members', headers: { 'HTTP_AUTHORIZATION' => valid_token },
           params: { page: page },
           # env: { 'action_dispatch.custom' => 'custom' },
           xhr: true, as: :json
@@ -21,7 +21,7 @@ describe "API Members Paging", :type => :request do
     body = do_get(2)
     expect(response).to be_success
     expect(response.status).to eq(200)
-    expect(body.length).to eq(Person.count)
+    expect(body.length).to eq(Member.count)
   end
   
 end

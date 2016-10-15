@@ -5,18 +5,18 @@ describe "API Members::show", :type => :request do
   include AuthHelper # example tokens
 
   before :each do
-    @p1 = Person.create!(first_name: 'p1', )
-    @p2 = Person.create!(first_name: 'p2', )
+    @p1 = Member.create!(first_name: 'p1', )
+    @p2 = Member.create!(first_name: 'p2', )
  
-    @mom = Person.create!(first_name: 'mom')
-    @dad = Person.create!(first_name: 'dad')
+    @mom = Member.create!(first_name: 'mom')
+    @dad = Member.create!(first_name: 'dad')
 
-    fam = Family.create!(name: 'fam1', people: [@mom,@dad], children: [@p1,@p2])
+    fam = Family.create!(name: 'fam1', members: [@mom,@dad], children: [@p1,@p2])
 
   end
 
   def do_show(id,token)
-    get "/members/#{id}", headers: { 'HTTP_AUTHORIZATION' => token },
+    get "/api/v1/members/#{id}", headers: { 'HTTP_AUTHORIZATION' => token },
           # params: { id: id },
           # env: { 'action_dispatch.custom' => 'custom' },
           xhr: true, as: :json
@@ -46,11 +46,11 @@ describe "API Members::show", :type => :request do
   end
 
   it 'valid token responds with details' do
-    person_hash = do_show(@p1.id,valid_token)
+    member_hash = do_show(@p1.id,valid_token)
     expect(response).to be_success
     expect(response.status).to eq(200)
-    expect(person_hash['first_name']).to eq(@p1.first_name)
-    parents = person_hash['parents']
+    expect(member_hash['first_name']).to eq(@p1.first_name)
+    parents = member_hash['parents']
     expect(parents.length).to eq(2)
     expect(parents[0]['first_name']).to eq(@mom.first_name)
     expect(parents[1]['first_name']).to eq(@dad.first_name)

@@ -10,7 +10,7 @@ class Event < ApplicationRecord
 
   	def date_string
   		result = ""
-  		result += year if year > 0 
+  		result += "#{year}" if year > 0 
   		result += "-#{month}" if month > 0
   		result += "-#{day}" if day > 0
   		return result

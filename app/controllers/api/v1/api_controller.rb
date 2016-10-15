@@ -1,3 +1,5 @@
+module Api
+module V1
 class ApiController < ApplicationController
 
 	require 'jwt'
@@ -59,4 +61,6 @@ class ApiController < ApplicationController
 	    @current_profile = profile
 	end
 
+end
+end
 end

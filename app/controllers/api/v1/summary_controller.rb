@@ -1,3 +1,5 @@
+module Api
+module V1
 class SummaryController < ApiController
   
   # GET /summary.json
@@ -8,4 +10,6 @@ class SummaryController < ApiController
     @summary = { member_count: p, family_count: f }
   end
 
+end
+end
 end

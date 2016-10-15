@@ -1,19 +1,20 @@
+module Api
+module V1
 class MembersController < ApiController
 
-  # GET /members/1.json
+  # GET api/v1/members/1.json
   def show
-  	@person = Person.find(params[:id])
+  	@member = Member.find(params[:id])
   end
 
-  
-  # GET /members.json
+  # GET api/v1/members.json
   def index
     puts "*** MembersController: params=#{params.inspect}"
 
     if params[:search] && params[:search].length > 0
-      @people = Person.search(params[:search])
+      @members = Member.search(params[:search]).order(:id)
     else
-      @people = Person.all.take(103)
+      @members = Member.all.order(:id)
     end
 
     # now limit to the requested page
@@ -25,9 +26,11 @@ class MembersController < ApiController
       start = page * page_size
       finish = start + page_size - 1
       puts "*** #{page} :: #{start} .. #{finish}"
-      @people = @people[start..finish]
+      @members = @members[start..finish]
     end
 
   end
 
+end
+end
 end

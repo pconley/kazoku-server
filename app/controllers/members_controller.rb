@@ -4,7 +4,6 @@ class MembersController < ApplicationController
   
   before_action :authenticate_user! #, except: [:home, :about, :contact]
   
-
   # GET /members
   # GET /members.json
   def index

@@ -5,12 +5,12 @@ describe "API Members", :type => :request do
   include AuthHelper # example tokens
 
   before :each do
-    Person.create!
-    Person.create!
+    Member.create!
+    Member.create!
   end
 
   def do_get(token)
-    get '/members', headers: { 'HTTP_AUTHORIZATION' => token },
+    get '/api/v1/members', headers: { 'HTTP_AUTHORIZATION' => token },
           # params: { id: 1 },
           # env: { 'action_dispatch.custom' => 'custom' },
           xhr: true, as: :json
@@ -43,7 +43,7 @@ describe "API Members", :type => :request do
     body = do_get(valid_token)
     expect(response).to be_success
     expect(response.status).to eq(200)
-    expect(body.length).to eq(Person.count)
+    expect(body.length).to eq(Member.count)
   end
   
 end
