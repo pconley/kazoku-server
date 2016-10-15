@@ -2,7 +2,8 @@ class Event < ApplicationRecord
 
   	belongs_to :member, optional: true
 
-  	scope :birth, -> { where(kind: 'birth') }
+    scope :birth, -> { where(kind: 'birth') }
+    scope :death, -> { where(kind: 'death') }
   
 	def to_s
     	"<Event##{id} #{kind} : #{year}-#{month}-#{day} at #{place}>"

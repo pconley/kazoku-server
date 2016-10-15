@@ -14,6 +14,10 @@ class Member < ApplicationRecord
     "<Member##{id} #{key} #{last_name}, #{first_name}>"
   end
 
+  def self.search(search)
+    where("search_text LIKE ?", "%#{search}%") 
+  end
+
 	def self.build_search_text(params)
   	search_text = ''
   	search_text += params[:first_name].downcase + ' ' if params[:first_name]
@@ -26,17 +30,39 @@ class Member < ApplicationRecord
   def display_name
     "#{last_name}, #{first_name}"
   end
+
+  def birth
+    # there is only one birth!
+    self.events.birth.first
+  end
+
+  def death
+    # there is only one death!
+    self.events.death.first
+  end
   
   def full_name
     "#{first_name} #{last_name}"
   end
 
   def birth_string
-  	self.events.birth.date_string
+    return '?' unless birth
+    return '?' unless birth.year > 0
+    return birth.year.to_s
   end
 
   def parents
     family.try :members
   end
+
+  def display_dates
+    return "(#{self.birth_string})" unless death && death.year > 0
+    return "(#{self.birth_string} - #{death.year})"
+  end
+
+  def rawtexts
+    rawtext.split("\r\n")
+  end
+
 
 end

@@ -2,13 +2,13 @@
 
 <h1><%= @family.display_name %></h1>
 
-  <% @family.people.all.each do |member| %>
-  	<br><%= link_to member.description, member %>
+  <% @family.members.all.each do |member| %>
+  	<br><%= link_to member.display_name, member %>
   <% end %>
 
   <br>
   <br><strong>Parent(s)</strong>
-  <% @family.people.all.each do |spouse| %>
+  <% @family.members.all.each do |spouse| %>
 	<% if spouse.family %>
     	<br><%= link_to spouse.family.display_name, spouse.family %> << <%= spouse.first_name %>
 	<% end %>

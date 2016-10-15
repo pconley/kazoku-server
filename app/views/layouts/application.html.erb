@@ -35,7 +35,7 @@
 				<% if controller_name == 'families' %>
 					<% fam_class = 'active' %>
 					<% mem_class = 'lichen-text' %>
-				<% elsif controller_name == 'people' %>
+				<% elsif controller_name == 'members' %>
 					<% mem_class = 'active' %>				
 					<% fam_class = 'lichen-text' %>				
 				<% end %>
@@ -44,12 +44,12 @@
 	          	<li class="<%= fam_class %>">
 					<%= link_to image_tag("family.png", size: "30x30") + "Families", families_path, class: fam_class %></a>
 				</li>
-	            <li class="<%= mem_class %>"><%= link_to 'Members', people_path, class: mem_class %></li>
+	            <li class="<%= mem_class %>"><%= link_to 'Members', members_path, class: mem_class %></li>
 			  <% end %>
 	        </ul>
 			
 		  	<% if current_user %>				
-				<%= form_tag(people_path, :method => "get", id: "search-form", class: "navbar-form navbar-left") do %>
+				<%= form_tag(members_path, :method => "get", id: "search-form", class: "navbar-form navbar-left") do %>
 				    <%= text_field_tag :search, params[:search], placeholder: "Search People", class: "form-control"%>
 				    <%= submit_tag "Search", :name => nil, class: "btn btn-default" %>
 				<% end %>

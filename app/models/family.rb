@@ -17,9 +17,11 @@ class Family < ApplicationRecord
   end
   
   def built_name
-    name = member[0] ? member[0].first_name : ''
-    name += ' & ' if name.length > 0 && member[1]
-    name += member[1].first_name if member[1]
+    return "error1" unless members
+    return "error2" unless members[0]
+    name = members[0] ? members[0].first_name : ''
+    name += ' & ' if name.length > 0 && members[1]
+    name += members[1].first_name if members[1]
     return name
   end
   

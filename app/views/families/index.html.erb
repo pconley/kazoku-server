@@ -9,8 +9,7 @@
       	<th>Name</th>
       	<th>Spouse 1</th>
       	<th>Spouse 2</th>
-      	<th>Children</th>	  
-	  
+      	<th>Children</th>
     </tr>
   </thead>
 
@@ -24,15 +23,15 @@
 			<%= link_to family.display_name, family %>
 		</td>
         <td>
-			<% if family.people[0] %>
+			<% if family.members[0] %>
 			<%= image_tag("member.png", size: "20x20") %>
-			<%= link_to family.people[0].try(:full_name), family.people[0] %>
+			<%= link_to family.members[0].try(:full_name), family.members[0] %>
 			<% end %>
 		</td>
         <td>
-			<% if family.people[1] %>
+			<% if family.members[1] %>
 			<%= image_tag("member.png", size: "20x20") %>
-			<%= link_to family.people[1].try(:full_name), family.people[1] %>
+			<%= link_to family.members[1].try(:full_name), family.members[1] %>
 			<% end %>
 		</td>
         <td><%= family.children.count > 0 ? family.children.count : '' %></td>

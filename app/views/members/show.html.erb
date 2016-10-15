@@ -1,41 +1,64 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <p id="notice"><%= notice %></p>
+<% end %>
 
-  <br><strong>Name:</strong>
-  <%= @member.display_name %>
+<p>
+<%= link_to 'Edit this Record', edit_member_path(@member) %> |
+<%= link_to 'Members List', members_path %>
+</p>
 
-  <br><strong>Gender:</strong>
-  <%= @member.gender %>
+<strong>Name:</strong>
+<%= @member.display_name %>
 
-  <br><strong>Key:</strong>
-  <%= @member.key %>
+<br><strong>Gender:</strong>
+<%= @member.gender %>
 
-  <br><strong>Famc key:</strong>
-  <%= @member.famc_key %>
+<br><strong>Key:</strong>
+<%= @member.key %>
 
-  <br><strong>Fams keys:</strong>
-  <%= @member.fams_keys %>
+<br><strong>Famc key:</strong>
+<%= @member.famc_key %>
 
-<br><br>EVENTS<br>
-  <table>
-  <thead>
-    <tr>
-      <th>Event&nbsp;&nbsp;&nbsp;</th>
-      <th>Date&nbsp;&nbsp;&nbsp;</th>
-      <th>Place&nbsp;&nbsp;&nbsp;</th>
-    </tr>
-  </thead>
+<br><strong>Fams keys:</strong>
+<%= @member.fams_keys %>
 
-  <tbody>
-    <% @member.events.each do |event| %>
-      <tr>
-        <td><%= event.kind %></td>
-        <td><%= event.year %></td>
-        <td><%= event.place %></td>
-       </tr>
+<br><br><strong>Parents:</strong>
+<% if @member.parents %>
+    <% @member.parents.each do |parent| %>
+      <br> >>> <%= link_to parent.display_name, parent %>
     <% end %>
-  </tbody>
+<% end %>
+
+ <br><br><strong>Union(s):</strong>  
+  <% @member.families.each do |family| %>
+    <br>&nbsp;&nbsp;&nbsp;<%= link_to family.display_name, family %>
+    <% family.children.each do |child| %>
+    <br>&nbsp;&nbsp;&nbsp; - -> <%= link_to child.display_name, child %>
+  <% end %>
+
+  <% end %>
+
+<h4>EVENTS</h4>
+<table>
+<thead>
+  <tr>
+    <th>Event&nbsp;&nbsp;&nbsp;</th>
+    <th>Date&nbsp;&nbsp;&nbsp;</th>
+    <th>Place&nbsp;&nbsp;&nbsp;</th>
+  </tr>
+</thead>
+<tbody>
+  <% @member.events.each do |event| %>
+    <tr>
+      <td><%= event.kind %></td>
+      <td><%= event.year %></td>
+      <td><%= event.place %></td>
+     </tr>
+  <% end %>
+</tbody>
 </table>
 
-
-<%= link_to 'Edit', edit_member_path(@member) %> |
-<%= link_to 'Back', members_path %>
+<h4>Imported Text:</h4>
+<% @member.rawtexts.each do |line| %>
+    <div><%= line %></div>
+<% end %>
