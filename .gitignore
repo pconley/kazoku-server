@@ -8,6 +8,7 @@
 /.bundle
 
 .DS_Store
+./dump.rdb
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

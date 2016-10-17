@@ -15,6 +15,8 @@ RSpec.describe Family, type: :model do
 		puts "f = #{f.inspect}"
 		expect(kid.family.id).to eq(f.id)
 		expect(kid.parents).to eq([mom,dad])
+		expect(mom.children).to eq([kid])
+		expect(dad.children).to eq([kid])
 	end
 
 end

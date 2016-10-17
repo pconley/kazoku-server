@@ -55,6 +55,33 @@ class Member < ApplicationRecord
     family.try :members
   end
 
+  def siblings
+    sibs = []
+    kids = family ? family.children : []
+    kids.each do |kid|
+      sibs << kid unless kid.id == self.id
+    end
+    return sibs
+  end
+
+  def spouses
+    set = []
+    families.each do |f|
+      f.members.each do |m|
+        set << m unless m.id == self.id
+      end
+    end
+    return set
+  end
+
+  def children
+    kids = []
+    families.each do |f|
+      kids.push(*f.children)
+    end
+    return kids
+  end
+
   def display_dates
     return "(#{self.birth_string})" unless death && death.year > 0
     return "(#{self.birth_string} - #{death.year})"
