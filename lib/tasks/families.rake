@@ -5,7 +5,8 @@ namespace :db do
   desc "Import Families from JSON file"
   
   task families: :environment do
-            
+           
+    Person.delete_all 
     Family.delete_all
     Membership.delete_all
 
