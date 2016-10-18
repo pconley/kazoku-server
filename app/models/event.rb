@@ -5,9 +5,15 @@ class Event < ApplicationRecord
     scope :births, -> { where('kind="birth" and month>0') }
     scope :deaths, -> { where('kind="death" and month>0') }
 
-    scope :for_month, lambda{|m| { :conditions => { month: m } } }
+    scope :for_day,   -> (d) { where(day:   d) }
+    scope :for_month, -> (m) { where(month: m) }
+    scope :for_year,  -> (y) { where(year:  y) }
 
-	def to_s
+    scope :on_anniversary, -> (m,d) { for_month(m).for_day(d) }
+
+    scope :on_date, -> (dt) { for_month(dt.month).for_day(dt.day).for_year(dt.year) }
+
+	  def to_s
     	"<Event##{id} #{kind} : #{year}-#{month}-#{day} at #{place}>"
   	end
 
