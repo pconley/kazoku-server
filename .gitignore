@@ -10,6 +10,8 @@
 .DS_Store
 ./dump.rdb
 
+/lib/scripts/*
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal

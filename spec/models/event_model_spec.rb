@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Member, type: :model do
+RSpec.describe Event, type: :model do
 
 	params = {
 		kind: 'graduation',

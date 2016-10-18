@@ -33,12 +33,12 @@ class Member < ApplicationRecord
 
   def birth
     # there is only one birth!
-    self.events.birth.first
+    self.events.births.first
   end
 
   def death
     # there is only one death!
-    self.events.death.first
+    self.events.deaths.first
   end
   
   def full_name

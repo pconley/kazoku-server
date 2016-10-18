@@ -2,9 +2,11 @@ class Event < ApplicationRecord
 
   	belongs_to :member, optional: true
 
-    scope :birth, -> { where(kind: 'birth') }
-    scope :death, -> { where(kind: 'death') }
-  
+    scope :births, -> { where('kind="birth" and month>0') }
+    scope :deaths, -> { where('kind="death" and month>0') }
+
+    scope :for_month, lambda{|m| { :conditions => { month: m } } }
+
 	def to_s
     	"<Event##{id} #{kind} : #{year}-#{month}-#{day} at #{place}>"
   	end
