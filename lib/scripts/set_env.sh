@@ -1,4 +1,0 @@
-echo "Setting AUTH0 Parameters"
-
-export AUTH0_CLIENT_ID=6VtNWmSNXVxLDCxiDQaE6xGbBAbs4Nkk
-export AUTH0_CLIENT_SECRET=czyAb3eHSTKiSGrqm3wq-ahwbvSGN37wSDS-zx8x5FAhPy7w2V7TTi-KI6vhTNyo
