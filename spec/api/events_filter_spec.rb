@@ -27,5 +27,15 @@ describe "API Events Paging", :type => :request do
     body = do_get({year: 2014})
     expect(body.length).to eq(12)
   end
+
+  it 'gets events for the day' do
+    body = do_get({day: 14})
+    expect(body.length).to eq(12)
+  end
+
+  it 'gets events for the month and year' do
+    body = do_get({year: 2014, month: 3})
+    expect(body.length).to eq(1)
+  end
   
 end

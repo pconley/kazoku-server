@@ -47,8 +47,11 @@ class Member < ApplicationRecord
 
   def birth_string
     return '?' unless birth
-    return '?' unless birth.year > 0
-    return birth.year.to_s
+
+    return "#{birth.month}-#{birth.day}-#{birth.year}"
+
+    #return '?' unless birth.year > 0
+    #return birth.year.to_s
   end
 
   def parents

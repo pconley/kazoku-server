@@ -51,7 +51,7 @@
   <% @member.events.each do |event| %>
     <tr>
       <td><%= event.kind %></td>
-      <td><%= event.year %></td>
+      <td><%= event.date_string %></td>
       <td><%= event.place %></td>
      </tr>
   <% end %>
