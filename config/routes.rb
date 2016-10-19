@@ -16,14 +16,18 @@ Rails.application.routes.draw do
      get 'logout', controller: 'devise/sessions', action: 'destroy'
   end
 
-  scope :format => true, :constraints => { :format => 'json' } do
+  #scope :format => true, :constraints => { :format => 'json' } do
     namespace :api do
       namespace :v1 do
-        match '/summary', controller: 'summary', action: :show, format: 'json', via: [:get, :options]
-        match '/members', controller: 'members', action: :index, format: 'json', via: [:get, :options]
-        match '/members/:id', controller: 'members', action: :show, format: 'json', via: [:get, :options]
+        match '/summary', controller: 'summary', action: :show, via: [:get, :options]
+
+        match '/events', controller: 'events', action: :index, via: [:get, :options]
+        match '/events/:id', controller: 'events', action: :show, via: [:get, :options]
+
+        match '/members', controller: 'members', action: :index,  via: [:get, :options]
+        match '/members/:id', controller: 'members', action: :show, via: [:get, :options]
        end
     end
-  end
+  #end
   
 end

@@ -8,15 +8,14 @@ class EventsController < ApiController
 
   def index
     puts "*** EventsController: params=#{params.inspect}"
-
-    if params[:month] && params[:search].length > 0
-      @events = Event.search(params[:search]).order(:id)
-    else
-      @events = Event.all.order(:id)
-    end
-
+    puts "year = #{params[:month]}"
+    puts "year = #{params['month']}"
+    @events = Event.all.order(:id)
+    @events = @events.for_month(params[:month].to_i) if params[:month] 
+    @events = @events.for_year(params[:year].to_i) if params[:year] 
+    @events = @events.for_day(params[:day].to_i) if params[:day] 
   end
 
-end
+end 
 end
 end
