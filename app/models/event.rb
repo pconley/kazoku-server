@@ -2,8 +2,8 @@ class Event < ApplicationRecord
 
   	belongs_to :member, optional: true
 
-    scope :births, -> { where('kind="birth" and month>0') }
-    scope :deaths, -> { where('kind="death" and month>0') }
+    scope :births, -> { where("kind='birth' and month>0") }
+    scope :deaths, -> { where("kind='death' and month>0") }
 
     scope :for_day,   -> (d) { where(day:   d) }
     scope :for_month, -> (m) { where(month: m) }
