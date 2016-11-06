@@ -3,6 +3,8 @@ class ProfileService
 	def self.find(id_token)
 	    puts "*** ProfileService#find: token = #{id_token}"
 	    sub = AuthService.extract_subscriber(id_token)
+	    puts "--- ProfileService#find: sub = #{sub}"
+
 	    return nil unless sub # if not found in token
 
 	    # first, try to get the profile from the cache

@@ -18,6 +18,15 @@ class AuthService
 	end
 
 	def self.extract_subscriber(id_token)
+
+		if Rails.configuration.x.auth0.client_secret.nil?
+			puts "\n\n**********************************************************************\n*\n"
+			puts "*   Auth0 Environment Variables are not set... see /lib/scripts \n*\n"
+			puts "**********************************************************************\n\n"
+			return nil
+		end
+
+		puts "*** AuthService#extract_subscriber id_token=#{id_token}"
 		return nil if id_token.nil?
 	    # use the specific client secret to decode the raw token into it pieces
 		# next line may throw: JWT::DecodeError or JWT::ExpiredSignature

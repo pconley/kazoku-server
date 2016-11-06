@@ -5,7 +5,8 @@ describe "API Events", :type => :request do
   include AuthHelper # example tokens
 
   before :each do
-    Event.create!
+    m = Member.create!
+    Event.create!(member: m)
     Event.create!
   end
 

@@ -1,1 +1,1 @@
-json.extract! event, :id, :kind, :year, :month, :day
+json.extract! event, :id, :kind, :year, :month, :day, :member

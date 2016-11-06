@@ -1,0 +1,6 @@
+to run locally...
+
+-- set the auth0 environment variable
+-- spec requires a new auth0 key every day (get from client console)
+-- redis must be running in second console tab
+
