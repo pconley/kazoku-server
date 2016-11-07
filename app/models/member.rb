@@ -85,6 +85,11 @@ class Member < ApplicationRecord
     return kids
   end
 
+  def display_range
+    death_string = self.death ? " - #{self. death.year}" : ""
+    "(#{self.birth.year}#{death_string})"
+  end
+
   def display_dates
     return "(#{self.birth_string})" unless death && death.year > 0
     return "(#{self.birth_string} - #{death.year})"

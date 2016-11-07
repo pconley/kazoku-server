@@ -5,9 +5,9 @@ describe "API Events", :type => :request do
   include AuthHelper # example tokens
 
   before :each do
-    m = Member.create!
-    Event.create!(member: m)
-    Event.create!
+    m = Member.create!(last_name: "last", first_name: "first")
+    Event.create!(member: m, kind:'birth', year: 1955, month: 3, day: 1 )
+    Event.create!(member: m, kind:'death', year: 2025, month: 8, day: 5 )
   end
 
   def do_get(token)
