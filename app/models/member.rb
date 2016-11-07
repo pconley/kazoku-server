@@ -86,8 +86,9 @@ class Member < ApplicationRecord
   end
 
   def display_range
+    birth_string = self.birth.nil? ? " ? " : "#{self.birth.year}" 
     death_string = self.death.nil? ? "" : " - #{self.death.year}" 
-    "(#{self.birth.year}#{death_string})"
+    "(#{birth_string}#{death_string})"
   end
 
   def display_dates
