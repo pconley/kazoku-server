@@ -10,7 +10,7 @@ class ProfileService
 	    # first, try to get the profile from the cache
 	    json = CacheService.try(:get_profile,sub)
 	    if json
-	    	puts "*** using FETCHED profile = #{json}"
+	    	puts "*** using CACHED profile = #{json}"
 	    else
 	    	# fetch the profile from the auth service
 	    	json = AuthService.fetch_profile(id_token)

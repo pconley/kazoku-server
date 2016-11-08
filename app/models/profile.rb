@@ -5,8 +5,8 @@ class Profile
   	attr_accessor :email
 
   	def initialize(options = {})
-  		puts "*** profile options = #{options}"
-    	@role = options.fetch(:role, 'guest')
+  		puts "***Profile#init options = #{options}"
+    	@role = options.fetch(:role, 'guest') || 'guest'
     	@name = options[:name]
     	@email = options[:email]
     end
