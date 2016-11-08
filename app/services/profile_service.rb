@@ -34,9 +34,9 @@ class ProfileService
 	end
 
 	def self.extract(sym,json)
-		return nill unless json
+		return nil unless json
 		valid = JSON.parse(json) rescue nil
-		return nill unless valid
+		return nil unless valid
 		return valid[sym.to_s]
 	end
 
@@ -45,7 +45,7 @@ class ProfileService
 		valid = JSON.parse(json) rescue nil
 		return nil unless valid
 		meta = valid['app_metadata']
-		return nill unless meta
+		return nil unless meta
 		return meta[sym.to_s]
 	end
 
