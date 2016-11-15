@@ -19,13 +19,13 @@ RSpec.describe Event, type: :model do
   it "can retrieve births" do
     set = Event.births.all
     # not does not include the zero
-    expect(set.count).to eq(count)
+    expect(set.count).to eq(count+1)
   end
 
   it "can retrieve deaths" do
     set = Event.deaths.all
     # not does not include the zero
-    expect(set.count).to eq(count)
+    expect(set.count).to eq(count+1)
   end
 
   it "can retrieve by month" do

@@ -6,7 +6,13 @@ describe "API Members::show", :type => :request do
 
   before :each do
     @mem = Member.create!(first_name: 'mem')
-    @sib = Member.create!(first_name: 'sib')
+    # note the sibling birth years are out of order!!!
+    b1 = Event.create!({ kind: 'birth', year: 1960})
+    b2 = Event.create!({ kind: 'birth', year: 1955})
+    b3 = Event.create!({ kind: 'birth', year: 1950})
+    @sib1 = Member.create!(first_name: 'sib1', events: [b1])
+    @sib2 = Member.create!(first_name: 'sib2', events: [b2])
+    @sib3 = Member.create!(first_name: 'sib3', events: [b3])
     @mom = Member.create!(first_name: 'mom')
     @dad = Member.create!(first_name: 'dad')
     @spouse1 = Member.create!(first_name: 'spouse')
@@ -14,7 +20,7 @@ describe "API Members::show", :type => :request do
     @child1_2 = Member.create!(first_name: 'princess')
     @spouse2 = Member.create!(first_name: 'spouse2')
     @child2_1 = Member.create!(first_name: 'lil surprise')
-    fam0 = Family.create!(name: 'parents family', members: [@mom,@dad], children: [@mem,@sib])
+    fam0 = Family.create!(name: 'parents family', members: [@mom,@dad], children: [@mem,@sib1,@sib2,@sib3])
     fam1 = Family.create!(name: 'members first', members: [@mem,@spouse1], children: [@child1_1,@child1_2])
     fam2 = Family.create!(name: 'members second', members: [@mem,@spouse2], children: [@child2_1])
   end
@@ -64,8 +70,11 @@ describe "API Members::show", :type => :request do
     expect(children[1]['first_name']).to eq(@child1_2.first_name)
     expect(children[2]['first_name']).to eq(@child2_1.first_name)
     siblings = member_hash['siblings']
-    expect(siblings.length).to eq(1)
-    expect(siblings[0]['first_name']).to eq(@sib.first_name)
+    expect(siblings.length).to eq(3)
+    # expect them to be in birth year order
+    expect(siblings[0]['first_name']).to eq(@sib3.first_name)
+    expect(siblings[1]['first_name']).to eq(@sib2.first_name)
+    expect(siblings[2]['first_name']).to eq(@sib1.first_name)
     spouses = member_hash['spouses']
     expect(spouses.length).to eq(2)
     expect(spouses[0]['first_name']).to eq(@spouse1.first_name)

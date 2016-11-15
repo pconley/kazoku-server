@@ -45,6 +45,12 @@ class Member < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def birth_year
+    return 0 if birth.nil?
+    return 0 if birth.year.nil?
+    birth.year
+  end
+
   def birth_string
     return '?' unless birth
 
@@ -64,7 +70,15 @@ class Member < ApplicationRecord
     kids.each do |kid|
       sibs << kid unless kid.id == self.id
     end
-    return sibs
+    puts "\n\n"
+    puts "<< sibs1 = #{sibs[0].birth_year}" if sibs[0]
+    puts "<< sibs2 = #{sibs[1].birth_year}" if sibs[1]
+    puts "<< sibs3 = #{sibs[2].birth_year}" if sibs[2]
+    sibs.sort! { |x,y| x.birth_year <=> y.birth_year }
+    puts ">> sibs1 = #{sibs[0].birth_year}" if sibs[0]
+    puts ">> sibs2 = #{sibs[1].birth_year}" if sibs[1]
+    puts ">> sibs3 = #{sibs[2].birth_year}" if sibs[2]
+     return sibs
   end
 
   def spouses
@@ -99,6 +113,5 @@ class Member < ApplicationRecord
   def rawtexts
     rawtext.split("\r\n")
   end
-
 
 end
