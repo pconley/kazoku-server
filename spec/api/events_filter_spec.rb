@@ -12,7 +12,7 @@ describe "API Events Paging", :type => :request do
 
   def do_get(args)
     api_get 'events', args
-    puts "+++ response = #{response.status} :: #{response.body[0..2000]}"
+    # puts "+++ response = #{response.status} :: #{response.body[0..2000]}"
     expect(response).to be_success
     expect(response.status).to eq(200)
     return JSON.parse(response.body)

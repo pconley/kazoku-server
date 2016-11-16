@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "API Summary", :type => :request do
 
-  include AuthHelper # example tokens
+  include ApiHelper
 
   before :each do
     Person.create!
@@ -11,11 +11,8 @@ describe "API Summary", :type => :request do
   end
 
   def do_show()
-    get '/api/v1/summary', headers: { 'HTTP_AUTHORIZATION' => valid_token },
-          # params: { id: 1 },
-          # env: { 'action_dispatch.custom' => 'custom' },
-          xhr: true, as: :json
-    puts "+++ response = #{response.status} :: #{response.body[0..2000]}"
+    api_get "summary", {}
+    # puts "+++ response = #{response.status} :: #{response.body[0..2000]}"
     return JSON.parse(response.body)
   end
 

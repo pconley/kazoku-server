@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe "API Members::show", :type => :request do
 
+  include ApiHelper 
   include AuthHelper # example tokens
 
   before :each do
@@ -26,11 +27,8 @@ describe "API Members::show", :type => :request do
   end
 
   def do_show(id,token)
-    get "/api/v1/members/#{id}", headers: { 'HTTP_AUTHORIZATION' => token },
-          # params: { id: id },
-          # env: { 'action_dispatch.custom' => 'custom' },
-          xhr: true, as: :json
-    puts "+++ response = #{response.status} :: #{response.body[0..2000]}"
+    api_get "members/#{id}", {}, token
+    # puts "+++ response = #{response.status} :: #{response.body[0..2000]}"
     return JSON.parse(response.body)
   end
 

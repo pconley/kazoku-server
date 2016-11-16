@@ -38,7 +38,7 @@ class ApiController < ApplicationController
 
 	    # get the auth0 jwt token from the request header
 	    raw_token = request.headers['HTTP_AUTHORIZATION']
-	    puts "*** ApiController#validate_token raw_token = #{raw_token}"
+	    # puts "*** ApiController#validate_token raw_token = #{raw_token}"
 	    unless raw_token
 	    	render :json => { :errors => ['missing token'] }, status: 401
 	    	return false

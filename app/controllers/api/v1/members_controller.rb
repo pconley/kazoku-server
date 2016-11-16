@@ -11,13 +11,16 @@ class MembersController < ApiController
   def index
     puts "*** MembersController: params=#{params.inspect}"
 
+    # support the ability to limit the members returned
+    # based on a search string criteria
     if params[:search] && params[:search].length > 0
       @members = Member.search(params[:search]).order(:id)
     else
       @members = Member.all.order(:id)
     end
 
-    # now limit to the requested page
+    # support the ability to return pages of members
+    # where each "page" is of a fixed size
     if params[:page] && params[:page].length > 0
       page = params[:page].to_i
       page = 1 if page < 1
@@ -25,8 +28,17 @@ class MembersController < ApiController
       page_size = 20
       start = page * page_size
       finish = start + page_size - 1
-      puts "*** #{page} :: #{start} .. #{finish}"
+      puts "*** page #{page} is #{start} to #{finish}"
       @members = @members[start..finish]
+    end
+
+    # support the ability to return a range of members
+    # from start (zero based) for a number of records (count)
+    if params[:start] && params[:count]
+      start = params[:start].to_i
+      count = params[:count].to_i
+      puts "--- Processing range: #{start} to #{start+count-1}"
+      @members = @members[start..start+count-1]
     end
 
   end

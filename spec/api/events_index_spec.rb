@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe "API Events", :type => :request do
 
+  include ApiHelper 
   include AuthHelper # example tokens
 
   before :each do
@@ -11,11 +12,8 @@ describe "API Events", :type => :request do
   end
 
   def do_get(token)
-    get '/api/v1/events', headers: { 'HTTP_AUTHORIZATION' => token },
-          # params: { id: 1 },
-          # env: { 'action_dispatch.custom' => 'custom' },
-          xhr: true, as: :json
-    puts "+++ response = #{response.status} :: #{response.body[0..2000]}"
+    api_get "events", {}, token
+    # puts "+++ response = #{response.status} :: #{response.body[0..2000]}"
     return JSON.parse(response.body)
   end
 

@@ -70,15 +70,8 @@ class Member < ApplicationRecord
     kids.each do |kid|
       sibs << kid unless kid.id == self.id
     end
-    puts "\n\n"
-    puts "<< sibs1 = #{sibs[0].birth_year}" if sibs[0]
-    puts "<< sibs2 = #{sibs[1].birth_year}" if sibs[1]
-    puts "<< sibs3 = #{sibs[2].birth_year}" if sibs[2]
     sibs.sort! { |x,y| x.birth_year <=> y.birth_year }
-    puts ">> sibs1 = #{sibs[0].birth_year}" if sibs[0]
-    puts ">> sibs2 = #{sibs[1].birth_year}" if sibs[1]
-    puts ">> sibs3 = #{sibs[2].birth_year}" if sibs[2]
-     return sibs
+    return sibs
   end
 
   def spouses
