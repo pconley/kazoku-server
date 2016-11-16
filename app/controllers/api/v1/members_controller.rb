@@ -24,8 +24,9 @@ class MembersController < ApiController
     if params[:page] && params[:page].length > 0
       page = params[:page].to_i
       page = 1 if page < 1
-      page = page - 1 # zero based
-      page_size = 20
+      page = page - 1 # zero based paging
+      page_size = 20  # the default page size
+      page_size = params[:size].to_i if params[:size]
       start = page * page_size
       finish = start + page_size - 1
       puts "*** page #{page} is #{start} to #{finish}"
