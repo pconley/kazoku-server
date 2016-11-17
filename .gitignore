@@ -12,6 +12,8 @@ dump.rdb
 ./dump.rdb
 
 /lib/scripts/*
+/lib/tasks/*.json
+/lib/tasks/*.ged
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
